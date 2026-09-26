@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Lumen — Brand & Design Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#f3f1ec;--ink:#1a1916;--muted:#7a776f;--card:#fff;--line:rgba(26,25,22,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Inter,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;padding-bottom:70px}
+.serif{font-family:'Instrument Serif',Georgia,serif}
+.container{max-width:1120px;margin:0 auto;padding:0 28px}
+header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(243,241,236,.85);backdrop-filter:blur(14px)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:76px}
+.logo{font-family:'Instrument Serif',serif;font-size:1.6rem;text-decoration:none;color:var(--ink)}
+nav{display:flex;gap:36px}
+nav a{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500}
+nav a:hover{color:var(--ink)}
+.btn{display:inline-flex;padding:12px 24px;border-radius:999px;font-weight:600;font-size:.9rem;text-decoration:none;background:var(--ink);color:#fff;transition:.3s;font-family:inherit}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(0,0,0,.12)}
+.hero{padding:180px 0 100px;text-align:center}
+.hero h1{font-family:'Instrument Serif',serif;font-size:clamp(3.2rem,8vw,5.5rem);font-weight:400;line-height:1.05;letter-spacing:-.03em;margin-bottom:22px}
+.hero h1 em{font-style:italic}
+.hero p{color:var(--muted);font-size:1.15rem;max-width:420px;margin:0 auto 36px}
+.marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0}
+.track{display:flex;gap:48px;width:max-content;animation:m 30s linear infinite}
+.track span{font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+@keyframes m{to{transform:translateX(-50%)}}
+section{padding:100px 0}
+.label{font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.title{font-family:'Instrument Serif',serif;font-size:clamp(2rem,4vw,2.8rem);font-weight:400;margin-bottom:48px;max-width:480px;line-height:1.15}
+.work{display:grid;grid-template-columns:1.3fr 1fr;gap:14px}
+.w{border-radius:16px;overflow:hidden;min-height:280px;position:relative;display:flex;align-items:flex-end;padding:24px;color:#fff}
+.w.tall{min-height:480px;grid-row:span 2}
+.w .bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .7s}
+.w:hover .bg{transform:scale(1.05)}
+.w:nth-child(1) .bg{background-image:linear-gradient(to top,rgba(0,0,0,.55),transparent 50%),url(/demos/studio/img/hero.jpg)}
+.w:nth-child(2) .bg{background-image:linear-gradient(to top,rgba(0,0,0,.5),transparent 50%),url(/demos/studio/img/work1.jpg)}
+.w:nth-child(3) .bg{background-image:linear-gradient(to top,rgba(0,0,0,.5),transparent 50%),url(/demos/studio/img/work2.jpg)}
+.w .meta{position:relative;z-index:1}
+.w strong{display:block;font-size:1.15rem;margin-bottom:2px}
+.w span{font-size:.85rem;opacity:.75}
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.svc{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:32px 28px}
+.svc .n{font-family:'Instrument Serif',serif;font-size:1.6rem;color:var(--muted);opacity:.4;margin-bottom:16px}
+.svc h3{font-size:1.05rem;font-weight:600;margin-bottom:8px}
+.svc p{color:var(--muted);font-size:.92rem}
+.cta{text-align:center;padding:80px 20px}
+.cta h2{font-family:'Instrument Serif',serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:400;margin-bottom:14px;line-height:1.15}
+.cta p{color:var(--muted);margin-bottom:28px}
+footer{padding:28px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem;flex-wrap:wrap;gap:10px}
+footer a{color:var(--muted);text-decoration:none}
+#nexa-demo-nav{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:999;display:flex;gap:4px;flex-wrap:wrap;justify-content:center;max-width:calc(100vw - 24px);background:rgba(26,25,22,.92);padding:8px 10px;border-radius:16px;font-size:11px;font-family:Inter,sans-serif}
+#nexa-demo-nav a{color:#a8a29e;text-decoration:none;padding:6px 8px;border-radius:999px}
+#nexa-demo-nav a.active{background:rgba(255,255,255,.12);color:#fff}
+@media(max-width:800px){.work,.services{grid-template-columns:1fr}.w.tall{grid-row:auto;min-height:300px}nav{display:none}.hero{padding:140px 0 70px}}
+</style>
+</head>
+<body data-demo-niche="studio" data-demo-niche="studio">
+<header><div class="container nav">
+  <a href="#" class="logo">Lumen</a>
+  <nav><a href="#work">Work</a><a href="#services">Services</a><a href="#contact">Contact</a></nav>
+  <a href="#contact" class="btn">Start a project</a>
+</div></header>
+<section class="hero container">
+  <h1>Design that<br/><em>feels inevitable</em></h1>
+  <p>Brand identity and digital products for companies that care about every detail.</p>
+  <a href="#work" class="btn">View work</a>
+</section>
+<div class="marquee"><div class="track">
+  <span>Branding</span><span>Web Design</span><span>Art Direction</span><span>Packaging</span><span>Strategy</span>
+  <span>Branding</span><span>Web Design</span><span>Art Direction</span><span>Packaging</span><span>Strategy</span>
+</div></div>
+<section id="work" class="container">
+  <div class="label">Selected work</div>
+  <h2 class="title">Projects that define the practice</h2>
+  <div class="work">
+    <div class="w tall"><div class="bg"></div><div class="meta"><strong>Northwind</strong><span>Brand identity · 2025</span></div></div>
+    <div class="w"><div class="bg"></div><div class="meta"><strong>Pulse App</strong><span>Product design</span></div></div>
+    <div class="w"><div class="bg"></div><div class="meta"><strong>Atelier</strong><span>Packaging</span></div></div>
+  </div>
+</section>
+<section id="services" class="container">
+  <div class="label">Services</div>
+  <h2 class="title">What we do</h2>
+  <div class="services">
+    <div class="svc"><div class="n">01</div><h3>Brand identity</h3><p>Naming, systems, type and guidelines.</p></div>
+    <div class="svc"><div class="n">02</div><h3>Digital design</h3><p>Websites, apps and product interfaces.</p></div>
+    <div class="svc"><div class="n">03</div><h3>Art direction</h3><p>Campaigns, photography and motion.</p></div>
+  </div>
+</section>
+<section id="contact" class="cta container">
+  <h2>Let's make something<br/>worth shipping</h2>
+  <p>We reply within one business day.</p>
+  <a href="mailto:hello@lumen.studio" class="btn">hello@lumen.studio</a>
+</section>
+<footer class="container"><span>© 2026 Lumen · NexaSites Demo</span><a href="/">NexaSites</a> · <a href="/demos/studio/admin/" style="opacity:.7">Admin</a></footer>
+<div id="nexa-demo-nav">
+  <a href="/">NexaSites</a>
+  <a href="/demos/cafe/">קפה</a>
+  <a href="/demos/fitness/">כושר</a>
+  <a href="/demos/studio/" class="active">Studio</a>
+  <a href="/demos/realty/">נדל״ן</a>
+  <a href="/demos/beauty/">יופי</a>
+  <a href="/demos/lawyer/">עו״ד</a>
+  <a href="/demos/">הכל</a>
+</div>
+
+<script src="/js/countries.js"></script>
+<script src="/js/geo.js"></script>
+<script src="/js/country-selector.js"></script>
+<script src="/js/demo-intl.js"></script>
+
+</body>
+</html>

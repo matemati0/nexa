@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NexaSites — AI Websites Built for You</title>
+  <meta name="description" content="Professional AI-powered websites with domain included. From ₪1,000/year. Modern sites for businesses — built with AI, delivered fast." />
+  <meta name="theme-color" content="#020617" />
+  <meta name="keywords" content="AI website, website builder, Israel, NexaSites, custom website, domain included" />
+  <meta name="author" content="NexaSites" />
+  <link rel="canonical" href="https://nexa.vercel.app/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="NexaSites — We Build Your Online Presence" />
+  <meta property="og:description" content="Professional AI-powered websites with domain included. From ₪1,000/year." />
+  <meta property="og:image" content="/img/bg-main.jpg" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="he_IL" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="NexaSites — AI Websites Built for You" />
+  <meta name="twitter:description" content="Professional AI-powered websites with domain included." />
+  <meta name="twitter:image" content="/img/bg-main.jpg" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230ea5e9'/><text x='16' y='23' text-anchor='middle' font-size='18' font-weight='800' font-family='system-ui' fill='%23020617'>N</text></svg>" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230ea5e9'/><text x='16' y='23' text-anchor='middle' font-size='18' font-weight='800' font-family='system-ui' fill='%23020617'>N</text></svg>" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "NexaSites",
+    "description": "AI-powered professional websites with domain included.",
+    "url": "https://nexa.vercel.app/",
+    "areaServed": ["IL", "US", "EU"],
+    "priceRange": "₪1000-₪2000",
+    "offers": {
+      "@type": "AggregateOffer",
+      "lowPrice": "1000",
+      "highPrice": "2000",
+      "priceCurrency": "ILS"
+    }
+  }
+  </script>
+  <link rel="preload" href="/img/bg-main.jpg" as="image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    :root {
+      --bg: #020617;
+      --card: rgba(12, 12, 16, 0.82);
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --primary: #38bdf8;
+      --primary-strong: #0ea5e9;
+      --accent: #22d3ee;
+      --border: rgba(148, 163, 184, 0.12);
+      --border-hover: rgba(96, 165, 250, 0.35);
+      --radius: 20px;
+      --radius-sm: 14px;
+      --font: 'Inter', system-ui, sans-serif;
+      --font-display: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: #334155 var(--bg); }
+    ::-webkit-scrollbar { width: 7px; }
+    ::-webkit-scrollbar-track { background: #000000; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 99px; }
+    body {
+      font-family: var(--font);
+      background: #000000;
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    
+    /* Main cinematic background */
+    .site-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: #020617 url('/img/bg-main.jpg') center center / cover no-repeat;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .site-bg video#bgScrollVideo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+    }
+    .site-bg video#bgScrollVideo.ready {
+      opacity: 1;
+    }
+    .site-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(
+        180deg,
+        rgba(2, 6, 23, 0.55) 0%,
+        rgba(2, 6, 23, 0.45) 40%,
+        rgba(2, 6, 23, 0.75) 100%
+      );
+      pointer-events: none;
+    }
+
+    
+    .logo {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: 1.15rem; letter-spacing: 0.12em;
+      text-transform: uppercase; text-decoration: none; color: var(--text);
+    }
+    
+    .demos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      min-height: 200px;
+    }
+    #demos { position: relative; z-index: 2; }
+    .demo-card-img {
+      height: 180px;
+      overflow: hidden;
+      background: #0c1220;
+    }
+    .demo-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .demo-card-body { padding: 16px 18px 20px; }
+    .demo-card-body h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
+    .demo-card-body p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.45; }
+    .demos-all {
+      text-align: center;
+      margin-top: 28px;
+    }
+    .demos-all a {
+      display: inline-flex;
+      padding: 12px 24px;
+      border-radius: 999px;
+      border: 1px solid rgba(34,211,238,0.35);
+      color: #67e8f9;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .demos-all a:hover { background: rgba(34,211,238,0.1); }
+    .demo-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background: rgba(12, 18, 32, 0.75);
+      border: 1px solid rgba(56, 189, 248, 0.12);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s, box-shadow 0.4s;
+    }
+    .demo-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(34, 211, 238, 0.4);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35), 0 0 40px rgba(34, 211, 238, 0.08);
+    }
+    .demo-card-img {
+      height: 180px;
+      overflow: hidden;
+      position: relative;
+    }
+    .demo-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .demo-card:hover .demo-card-img img {
+      transform: scale(1.07);
+    }
+    .demo-card-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8, 12, 24, 0.5), transparent 55%);
+      pointer-events: none;
+    }
+    .demo-card-body {
+      padding: 18px 20px 22px;
+    }
+    .demo-card-body h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
+    }
+    .demo-card-body p {
+      font-size: 0.88rem;
+      color: var(--muted, #94a3b8);
+      line-height: 1.5;
+      margin: 0;
+    }
+    @media (max-width: 900px) {
+      .demos-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .demos-grid { grid-template-columns: 1fr; }
+      .demo-card-img { height: 160px; }
+    }
+
+    .logo-mark {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, #38bdf8, #22d3ee);
+      color: #0a1628; font-weight: 800; font-size: 1.25rem;
+      letter-spacing: 0; box-shadow: 0 0 24px rgba(34, 211, 238, 0.45);
+    }
+    .logo span {
+      background: linear-gradient(135deg, #e0f2fe, #22d3ee);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0ea5e9, #22d3ee) !important;
+      color: #0a1628 !important;
+      box-shadow: 0 0 32px rgba(34, 211, 238, 0.35), 0 4px 16px rgba(0,0,0,0.3) !important;
+    }
+    .btn-primary:hover {
+      box-shadow: 0 0 48px rgba(34, 211, 238, 0.5), 0 8px 28px rgba(0,0,0,0.35) !important;
+    }
+
+    #webgl {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .container {
+      width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 24px;
+      position: relative; z-index: 2;
+    }
+
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+    header.scrolled {
+      background: rgba(5, 8, 16, 0.85);
+      backdrop-filter: blur(20px) saturate(160%);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between; height: 72px;
+    }
+    .logo {
+      font-family: var(--font-display); font-size: 1.35rem; font-weight: 800;
+      letter-spacing: -0.04em; color: var(--text); text-decoration: none;
+    }
+    .logo span {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    nav { display: flex; gap: 28px; }
+    nav a {
+      color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500;
+      transition: color 0.25s;
+    }
+    nav a:hover { color: var(--primary); }
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+
+    .lang-dropdown { position: relative; }
+    .lang-toggle {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border, rgba(255,255,255,0.1));
+      color: var(--text, #e2e8f0); padding: 8px 12px; border-radius: 999px;
+      font-size: 0.82rem; font-weight: 600; cursor: pointer; font-family: inherit;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .lang-toggle:hover { border-color: rgba(34,211,238,0.4); background: rgba(34,211,238,0.08); }
+    .lang-menu {
+      display: none; position: absolute; top: calc(100% + 8px); right: 0; min-width: 220px;
+      background: rgba(10, 16, 28, 0.96); backdrop-filter: blur(16px);
+      border: 1px solid rgba(56,189,248,0.15); border-radius: 14px;
+      padding: 6px; box-shadow: 0 16px 40px rgba(0,0,0,0.45); z-index: 200;
+    }
+    [dir="rtl"] .lang-menu { right: auto; left: 0; }
+    .lang-dropdown.open .lang-menu { display: block; }
+    .lang-dropdown.open .lang-toggle { border-color: rgba(34,211,238,0.5); }
+    .lang-option {
+      display: block; width: 100%; text-align: start; background: transparent; border: none;
+      color: #cbd5e1; padding: 10px 12px; border-radius: 10px; font-size: 0.88rem;
+      font-weight: 500; cursor: pointer; font-family: inherit; transition: background 0.15s, color 0.15s;
+    }
+    
+    .lang-menu { min-width: 260px !important; }
+    .lang-option {
+      display: grid !important;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto;
+      gap: 2px 12px;
+      text-align: start !important;
+      padding: 12px 14px !important;
+    }
+    .lang-opt-name { font-weight: 600; color: #f1f5f9; grid-column: 1; }
+    .lang-opt-region { font-size: 0.72rem; color: #64748b; grid-column: 1; }
+    .lang-opt-price {
+      grid-column: 2; grid-row: 1 / span 2; align-self: center;
+      font-size: 0.8rem; font-weight: 700; color: #22d3ee; white-space: nowrap;
+    }
+    .lang-option.active .lang-opt-name { color: #22d3ee; }
+
+    .lang-option:hover, .lang-option.active {
+      background: rgba(34,211,238,0.12); color: #e0f2fe;
+    }
+
+    .lang-toggle {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      color: var(--text); padding: 8px 16px; border-radius: 999px;
+      font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.25s;
+    }
+    .lang-toggle:hover { border-color: var(--border-hover); background: rgba(96,165,250,0.1); }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 26px; border-radius: 999px; font-weight: 600; font-size: 0.94rem;
+      text-decoration: none; transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
+      cursor: pointer; border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #22d3ee);
+      color: white;
+      box-shadow: 0 0 30px rgba(59,130,246,0.3), 0 4px 16px rgba(0,0,0,0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 45px rgba(59,130,246,0.45), 0 8px 28px rgba(0,0,0,0.35);
+    }
+    .btn-outline {
+      background: rgba(255,255,255,0.04); color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover {
+      border-color: var(--border-hover); background: rgba(96,165,250,0.08);
+      transform: translateY(-2px);
+    }
+    .btn-lg { padding: 15px 32px; font-size: 1rem; }
+    .btn-full { width: 100%; }
+
+    .mobile-menu-btn { display: none; background: none; border: none; color: var(--text); font-size: 1.4rem; cursor: pointer; }
+    .mobile-nav {
+      display: none; position: absolute; top: 72px; left: 0; right: 0;
+      background: rgba(5,8,16,0.95); backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border); padding: 16px 24px 24px;
+      flex-direction: column; gap: 4px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      color: var(--text); text-decoration: none; padding: 12px 14px;
+      border-radius: 12px; font-weight: 500;
+    }
+    .mobile-nav a:hover { background: rgba(96,165,250,0.1); }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      z-index: 2;
+
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 100px 0 120px; position: relative; z-index: 2;
+    }
+    .hero-content { max-width: 640px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(96,165,250,0.1); border: 1px solid rgba(96,165,250,0.25);
+      color: var(--primary); padding: 7px 16px; border-radius: 999px;
+      font-size: 0.8rem; font-weight: 600; margin-bottom: 24px;
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    .hero-badge .dot {
+      width: 6px; height: 6px; background: var(--accent); border-radius: 50%;
+      box-shadow: 0 0 12px var(--accent); animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    .hero h1 {
+      font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 3.8rem);
+      font-weight: 800; line-height: 1.12; letter-spacing: -0.04em;
+      margin-bottom: 20px;
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.08s both;
+    }
+    .hero h1 .gradient {
+      background: linear-gradient(135deg, #60a5fa, #22d3ee);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero p {
+      font-size: 1.12rem; color: var(--text-muted); max-width: 480px;
+      margin-bottom: 32px; line-height: 1.7;
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.16s both;
+    }
+    .hero-cta {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.24s both;
+    }
+    .hero-stats {
+      display: flex; gap: 36px; margin-top: 48px; flex-wrap: wrap;
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.32s both;
+    }
+    .stat-value {
+      font-family: var(--font-display); font-size: 1.7rem; font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #e2e8f0, #60a5fa);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .stat-label { font-size: 0.82rem; color: var(--text-dim); margin-top: 2px; font-weight: 500; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    section { padding: 90px 0; position: relative; z-index: 2; }
+    .section-header { text-align: center; margin-bottom: 52px; }
+    .section-header h2 {
+      font-family: var(--font-display); font-size: clamp(1.9rem, 3.8vw, 2.5rem);
+      font-weight: 800; letter-spacing: -0.03em; margin-bottom: 12px;
+    }
+    .section-header p { color: var(--text-muted); font-size: 1.08rem; max-width: 480px; margin: 0 auto; }
+
+    .reveal {
+      opacity: 1; transform: none;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; }
+
+    .packages-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .package-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 32px 26px 28px; backdrop-filter: blur(16px);
+      display: flex; flex-direction: column;
+      transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
+      position: relative;
+    }
+    .package-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35), 0 0 30px rgba(59,130,246,0.08);
+    }
+    .package-card.featured {
+      border-color: rgba(96,165,250,0.35);
+      background: linear-gradient(165deg, rgba(59,130,246,0.12) 0%, rgba(12,16,28,0.85) 45%);
+      box-shadow: 0 0 40px rgba(59,130,246,0.1);
+    }
+    .package-card.featured::before {
+      content: attr(data-badge);
+      position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, #3b82f6, #22d3ee);
+      color: white; font-size: 0.68rem; font-weight: 700; padding: 4px 13px;
+      border-radius: 999px; text-transform: uppercase; letter-spacing: 0.04em;
+      box-shadow: 0 4px 14px rgba(59,130,246,0.4);
+    }
+    .package-name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+    .package-price { font-family: var(--font-display); font-size: 2.3rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 6px; }
+    .package-price span { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
+    .package-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 22px; line-height: 1.6; }
+    .package-features { list-style: none; margin-bottom: 26px; flex: 1; }
+    .package-features li { display: flex; gap: 10px; margin-bottom: 10px; font-size: 0.9rem; }
+    .package-features li .check {
+      width: 18px; height: 18px; background: rgba(52,211,153,0.15); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; color: #34d399;
+      font-size: 0.65rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+    }
+
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .step {
+      text-align: center; padding: 24px 16px;
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      transition: all 0.35s;
+    }
+    .step:hover { transform: translateY(-5px); border-color: var(--border-hover); }
+    .step-number {
+      width: 48px; height: 48px;
+      background: linear-gradient(145deg, #3b82f6, #22d3ee);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; color: white;
+      margin: 0 auto 14px; box-shadow: 0 0 24px rgba(59,130,246,0.35);
+    }
+    .step h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .step p { color: var(--text-muted); font-size: 0.85rem; line-height: 1.55; }
+
+    .benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .benefit-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 26px 22px; transition: all 0.35s;
+    }
+    .benefit-card:hover { transform: translateY(-5px); border-color: var(--border-hover); }
+    
+    .benefit-icon, .contact-method .icon, .i-svg {
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .benefit-icon svg, .contact-method .icon svg, .i-svg svg {
+      width: 22px; height: 22px; stroke: currentColor; fill: none;
+      stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .benefit-icon svg { width: 24px; height: 24px; color: var(--primary); }
+    .check {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 18px; height: 18px; flex-shrink: 0;
+    }
+    .check svg { width: 14px; height: 14px; stroke: var(--accent); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .faq-question .icon svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .mobile-menu-btn svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .back-top svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+
+    .benefit-icon {
+      width: 44px; height: 44px;
+      background: linear-gradient(145deg, rgba(59,130,246,0.15), rgba(251,146,60,0.1));
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; margin-bottom: 14px;
+    }
+    .benefit-card h3 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
+    .benefit-card p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; }
+
+    .faq-list { max-width: 660px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+    .faq-item {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
+      overflow: hidden; transition: border-color 0.25s;
+    }
+    .faq-item:hover, .faq-item.open { border-color: var(--border-hover); }
+    .faq-question {
+      width: 100%; background: none; border: none; color: var(--text);
+      font-family: inherit; font-size: 0.96rem; font-weight: 600; text-align: left;
+      padding: 16px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    }
+    .faq-question .icon {
+      width: 26px; height: 26px; border-radius: 50%; background: rgba(96,165,250,0.12);
+      display: flex; align-items: center; justify-content: center; color: var(--primary);
+      font-size: 1.05rem; transition: transform 0.3s; flex-shrink: 0;
+    }
+    .faq-item.open .faq-question .icon { transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.35s ease;
+      color: var(--text-muted); font-size: 0.9rem; line-height: 1.65; padding: 0 20px;
+    }
+    .faq-item.open .faq-answer { max-height: 240px; padding: 0 20px 16px; }
+
+    .cta-section {
+      text-align: center;
+      background: linear-gradient(155deg, rgba(59,130,246,0.1) 0%, rgba(12,16,28,0.8) 50%, rgba(251,146,60,0.06) 100%);
+      border-radius: 24px; padding: 64px 36px; border: 1px solid var(--border);
+    }
+    .cta-section h2 {
+      font-family: var(--font-display); font-size: clamp(1.7rem, 3.5vw, 2.3rem);
+      font-weight: 800; margin-bottom: 12px;
+    }
+    .cta-section p { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 26px; max-width: 400px; margin-left: auto; margin-right: auto; }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 40px; align-items: start; }
+    .contact-info h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
+    .contact-info > p { color: var(--text-muted); margin-bottom: 22px; font-size: 1rem; }
+    .contact-methods { display: flex; flex-direction: column; gap: 10px; }
+    .contact-method {
+      display: flex; align-items: center; gap: 12px; color: var(--text); text-decoration: none;
+      font-weight: 500; padding: 13px 15px; background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; transition: all 0.3s;
+    }
+    .contact-method:hover { border-color: var(--border-hover); transform: translateX(4px); }
+    .contact-method .icon {
+      width: 40px; height: 40px;
+      background: linear-gradient(145deg, rgba(59,130,246,0.15), rgba(251,146,60,0.1));
+      border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    }
+    .contact-form {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 32px 28px; backdrop-filter: blur(16px);
+    }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.84rem; font-weight: 600; margin-bottom: 6px; color: var(--text-muted); }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; background: rgba(5,8,16,0.6); border: 1px solid var(--border);
+      border-radius: 12px; padding: 12px 15px; color: var(--text); font-family: inherit; font-size: 0.94rem;
+      transition: all 0.25s;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+    }
+    .form-group textarea { min-height: 100px; resize: vertical; }
+    .form-group select { cursor: pointer; appearance: none; }
+    .form-note { font-size: 0.76rem; color: var(--text-dim); margin-top: 12px; text-align: center; }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 36px 0 28px;
+      position: relative; z-index: 2;
+    }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
+    .footer-copy { color: var(--text-dim); font-size: 0.86rem; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.86rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--primary); }
+
+    @media (max-width: 960px) {
+      .packages-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .benefits-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 720px) {
+      nav { display: none; }
+      .mobile-menu-btn { display: block; padding: 8px; min-width: 44px; min-height: 44px; }
+      .hero { min-height: auto; padding: 100px 0 80px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .cta-section { padding: 44px 22px; }
+      section { padding: 70px 0; }
+      .steps { grid-template-columns: 1fr; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .logo { font-size: 0.95rem; letter-spacing: 0.08em; gap: 8px; }
+      .logo-mark { width: 32px; height: 32px; font-size: 1.1rem; }
+      #langRegion { display: none; }
+      .lang-menu {
+        position: fixed !important;
+        left: 16px !important;
+        right: 16px !important;
+        top: 72px !important;
+        min-width: 0 !important;
+        width: auto !important;
+      }
+      .header-inner { gap: 10px; }
+      .container { padding: 0 16px; }
+      .hero h1 { font-size: clamp(1.9rem, 8vw, 2.6rem); }
+      .btn { min-height: 44px; }
+      .lang-toggle { padding: 8px 12px; font-size: 0.78rem; min-height: 40px; }
+      .package-card { padding: 24px 18px; }
+      .stat-value { font-size: 1.3rem; }
+    }
+    @media (max-width: 400px) {
+      .logo span:not(.logo-mark) { max-width: 90px; overflow: hidden; text-overflow: ellipsis; }
+    }
+  
+    .skip-link {
+      position: absolute; top: -100px; left: 16px; z-index: 9999;
+      background: var(--primary); color: #020617; padding: 10px 16px;
+      border-radius: 8px; font-weight: 600; text-decoration: none;
+    }
+    .skip-link:focus { top: 16px; }
+    .back-top {
+      position: fixed; bottom: 24px; left: 24px; z-index: 80;
+      width: 44px; height: 44px; border-radius: 12px;
+      background: rgba(14, 165, 233, 0.9); color: #020617;
+      border: none; cursor: pointer; font-size: 1.2rem; font-weight: 700;
+      opacity: 0; pointer-events: none; transition: opacity .3s, transform .3s;
+      box-shadow: 0 8px 24px rgba(14,165,233,.35);
+    }
+    .back-top.show { opacity: 1; pointer-events: auto; }
+    .back-top:hover { transform: translateY(-3px); }
+    .form-success-box {
+      display: none; text-align: center; padding: 32px 20px;
+      background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: 16px;
+    }
+    .form-success-box.show { display: block; }
+    .form-success-box .big { font-size: 2.5rem; margin-bottom: 12px; }
+    .form-success-box h3 { font-size: 1.2rem; margin-bottom: 8px; }
+    .form-success-box p { color: var(--text-muted); font-size: .95rem; }
+    [dir="rtl"] .back-top { left: auto; right: 24px; }
+
+  
+    /* First-visit intro video */
+    .intro-overlay {
+      position: fixed; inset: 0; z-index: 99999;
+      background: #000;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 1; transition: opacity 0.7s ease, visibility 0.7s;
+    }
+    .intro-overlay.hide {
+      opacity: 0; visibility: hidden; pointer-events: none;
+    }
+    .intro-overlay video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      background: #000;
+    }
+    .intro-skip {
+      position: absolute; bottom: 28px; right: 28px; z-index: 2;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px; border-radius: 999px;
+      background: rgba(255,255,255,0.12); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff; font-family: inherit; font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; transition: background 0.2s, transform 0.2s;
+    }
+    .intro-skip:hover { background: rgba(255,255,255,0.22); transform: translateY(-1px); }
+    [dir="rtl"] .intro-skip { right: auto; left: 28px; }
+    .intro-overlay.no-video .intro-fallback {
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+      color: #e0f2fe; text-align: center; padding: 24px;
+    }
+    .intro-fallback { display: none; }
+    .intro-fallback .logo-n {
+      width: 64px; height: 64px; border-radius: 16px;
+      background: linear-gradient(135deg, #38bdf8, #22d3ee);
+      color: #020617; font-weight: 800; font-size: 2rem;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 40px rgba(34,211,238,0.4);
+    }
+    body.intro-active { overflow: hidden; }
+    @media (max-width: 600px) {
+      .intro-skip { bottom: 20px; right: 16px; left: 16px; justify-content: center; }
+      [dir="rtl"] .intro-skip { left: 16px; right: 16px; }
+    }
+
+  
+    section, header, footer, .hero, main {
+      position: relative;
+      z-index: 2;
+    }
+    .hero-content, .container {
+      position: relative;
+      z-index: 3;
+    }
+    /* Force package/demo cards always shown */
+    .package-card, .demo-card, .benefit-card, .step, .faq-item {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: none !important;
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- First-visit intro video -->
+  <div class="intro-overlay" id="introOverlay" aria-hidden="false">
+    <video id="introVideo" playsinline muted autoplay preload="auto" poster="/video/poster.jpg">
+      <source src="/video/intro.mp4" type="video/mp4" />
+      <source src="/video/intro.webm" type="video/webm" />
+    </video>
+    <div class="intro-fallback">
+      <div class="logo-n">N</div>
+      <div style="font-weight:700;letter-spacing:0.12em">NEXASITES</div>
+    </div>
+    <button type="button" class="intro-skip" id="introSkip" aria-label="Skip intro">
+      Skip <span aria-hidden="true">→</span>
+    </button>
+  </div>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="site-bg" aria-hidden="true">
+    <video id="bgScrollVideo" muted playsinline preload="auto" poster="/img/bg-main.jpg">
+      <source src="/video/bg-scroll.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <canvas id="webgl"></canvas>
+
+  <header id="header">
+    <div class="container header-inner">
+      <a href="#" class="logo"><span class="logo-mark">N</span> NEXA<span>SITES</span></a>
+      <nav>
+        <a href="#packages" data-i18n="nav_packages">Packages</a>
+        <a href="#demos" data-i18n="nav_demos">Demos</a>
+        <a href="#how" data-i18n="nav_how">How it works</a>
+        <a href="#benefits" data-i18n="nav_benefits">Why us</a>
+        <a href="#faq" data-i18n="nav_faq">FAQ</a>
+        <a href="#contact" data-i18n="nav_contact">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <div class="lang-dropdown" id="langDropdown">
+          <button type="button" class="lang-toggle" id="langToggle" aria-haspopup="listbox" aria-expanded="false">
+            <span id="langLabel">English</span><span id="langRegion" style="opacity:.55;font-size:.72rem;margin-inline-start:6px">US / Global</span>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="lang-menu" id="langMenu" role="listbox">
+            <button type="button" class="lang-option" data-lang="en" role="option">
+              <span class="lang-opt-name">English</span>
+              <span class="lang-opt-region">US / Global</span>
+              <span class="lang-opt-price">$299 – $599</span>
+            </button>
+            <button type="button" class="lang-option" data-lang="he" role="option">
+              <span class="lang-opt-name">עברית</span>
+              <span class="lang-opt-region">ישראל</span>
+              <span class="lang-opt-price">₪1,000 – ₪2,000</span>
+            </button>
+            <button type="button" class="lang-option" data-lang="ar" role="option">
+              <span class="lang-opt-name">العربية</span>
+              <span class="lang-opt-region">الشرق الأوسط</span>
+              <span class="lang-opt-price">$299 – $599</span>
+            </button>
+            <button type="button" class="lang-option" data-lang="ru" role="option">
+              <span class="lang-opt-name">Русский</span>
+              <span class="lang-opt-region">СНГ / Global</span>
+              <span class="lang-opt-price">$249 – $549</span>
+            </button>
+            <button type="button" class="lang-option" data-lang="es" role="option">
+              <span class="lang-opt-name">Español</span>
+              <span class="lang-opt-region">ES / LATAM</span>
+              <span class="lang-opt-price">€279 – €549</span>
+            </button>
+            <button type="button" class="lang-option" data-lang="de" role="option">
+              <span class="lang-opt-name">Deutsch</span>
+              <span class="lang-opt-region">DE / EU</span>
+              <span class="lang-opt-price">€299 – €599</span>
+            </button>
+          </div>
+        </div>
+        <a href="/admin/" class="btn btn-outline" style="padding:10px 16px;font-size:0.85rem" data-i18n="nav_admin">Admin Demo</a>
+        <a href="#contact" class="btn btn-primary" data-i18n="nav_cta">Get a Quote</a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      </div>
+    </div>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="#packages" data-i18n="nav_packages">Packages</a>
+      <a href="#demos" data-i18n="nav_demos">Demos</a>
+      <a href="#how" data-i18n="nav_how">How it works</a>
+      <a href="#benefits" data-i18n="nav_benefits">Why us</a>
+      <a href="#faq" data-i18n="nav_faq">FAQ</a>
+      <a href="#contact" data-i18n="nav_contact">Contact</a>
+      <a href="#contact" class="btn btn-primary" style="margin-top:8px;text-align:center" data-i18n="nav_cta">Get a Quote</a>
+    </div>
+  </header>
+
+  <main id="main"><section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          <span data-i18n="hero_badge">We Build Your Online Presence</span>
+        </div>
+        <h1>
+          <span data-i18n="hero_title_1">Professional websites</span><br />
+          <span class="gradient" data-i18n="hero_title_2">built with AI</span>
+        </h1>
+        <p data-i18n="hero_subtitle">I create modern, high-converting websites for businesses and freelancers using advanced AI. Domain included. From ₪1,000 per year.</p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn btn-primary btn-lg" data-i18n="hero_cta_primary">Start Your Project</a>
+          <a href="#packages" class="btn btn-outline btn-lg" data-i18n="hero_cta_secondary">View Packages</a>
+        </div>
+        <div class="hero-stats">
+          <div><div class="stat-value">48h</div><div class="stat-label" data-i18n="stat_1">Average delivery</div></div>
+          <div><div class="stat-value" data-price-from data-i18n-price="from">From $299 / year</div><div class="stat-label" data-i18n="stat_2">Starting price / year</div></div>
+          <div><div class="stat-value">100%</div><div class="stat-label" data-i18n="stat_3">Domain included</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="packages">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 data-i18n="packages_title">Simple, transparent pricing</h2>
+        <p data-i18n="packages_subtitle">Choose the package that fits your needs. All plans include domain registration and basic maintenance for one year.</p>
+      </div>
+      <div class="packages-grid">
+        <div class="package-card reveal reveal-delay-1">
+          <div class="package-name" data-i18n="pkg1_name">Starter</div>
+          <div class="package-price"><span data-i18n="pkg1_price" data-i18n-price="starter">$299</span> <span data-i18n="per_year" data-i18n-price="per">/ year</span></div>
+          <div class="package-desc" data-i18n="pkg1_desc">Perfect for freelancers and small businesses that need a clean online presence.</div>
+          <ul class="package-features">
+            <li><span class="check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span data-i18n="pkg1_f1">1–3 page modern website</span></li>
+            <li><span class="check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span data-i18n="pkg1_f2">Custom domain included</span></li>
+            <li><span class="check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span data-i18n="pkg1_f3">Mobile-responsive design</span></li>
+            <li><span class="check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span data-i18n="pkg1_f4">Contact form + WhatsApp button</span></li>
+            <li><span class="check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span data-i18n="pkg1_f5">Basic SEO setup</span></li>
+            <li><span class="check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span data-i18n="pkg1_f6">1 year hosting & support</span></li>
+          </ul>
+          <a href="#contact" class="btn btn-outline btn-full" data-i18n="pkg_cta">Choose Starter</a>
+        </div>
+        <div class="package-card featured reveal reveal-delay-2" data-badge="Most Popular">
+          <div class="package-name" data-i18n="pkg2_name">Professional</div>
+          <div class="package-price"><span data-i18n="pkg2_price" data-i18n-price="growth">$449</span> <span data-i18n="per_year" data-i18n-price="per">/ year</span></div>
+          <div class="package-desc" data-i18n="pkg2_desc">Ideal for growing businesses that want a stronger online presence and more features.</div>
+          <ul class="package-features">
+            <li><span class="check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span data-i18n="pkg2_f1">Up to 6 pages + blog</span></li>
+            <li><span class="check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span data-i18n="pkg2_f2">Premium custom domain</span></li>
+            <li><span class="check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span data-i18n="pkg2_f3">Advanced design & animations</span></li>
+            <li><span class="check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span data-i18n="pkg2_f4">Lead capture forms</span></li>
+            <li><span class="check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span data-i18n="pkg2_f5">Google Analytics + SEO</span></li>
+            <li><span class="check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span data-i18n="pkg2_f6">Priority support (1 year)</span></li>
+          </ul>
+          <a href="#contact" class="btn btn-primary btn-full" data-i18n="pkg_cta2">Choose Professional</a>
+        </div>
+        <div class="package-card reveal reveal-delay-3">
+          <div class="package-name" data-i18n="pkg3_name">Premium</div>
+          <div class="package-price"><span data-i18n="pkg3_price" data-i18n-price="pro">$599</span> <span data-i18n="per_year" data-i18n-price="per">/ year</span></div>
+          <div class="package-desc" data-i18n="pkg3_desc">Full-featured solution for businesses that need maximum impact and customization.</div>
+          <ul class="package-features">
+            <li><span class="check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span data-i18n="pkg3_f1">Unlimited pages + advanced features</span></li>
+            <li><span class="check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span data-i18n="pkg3_f2">Premium domain + email</span></li>
+            <li><span class="check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span data-i18n="pkg3_f3">Custom design system</span></li>
+            <li><span class="check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span data-i18n="pkg3_f4">Multi-language support</span></li>
+            <li><span class="check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span data-i18n="pkg3_f5">Full SEO + performance optimization</span></li>
+            <li><span class="check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span><span data-i18n="pkg3_f6">Dedicated support & updates</span></li>
+          </ul>
+          <a href="#contact" class="btn btn-outline btn-full" data-i18n="pkg_cta3">Choose Premium</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section id="demos">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 data-i18n="demos_title">Live demos</h2>
+        <p data-i18n="demos_subtitle">Real examples of sites we build — open any of them.</p>
+      </div>
+      <div class="demos-grid">
+        <a href="/demos/cafe/" class="demo-card reveal reveal-delay-1 visible">
+          <div class="demo-card-img"><img src="/demos/cafe/img/hero.jpg" alt="Nura Cafe" loading="lazy"/></div>
+          <div class="demo-card-body">
+            <h3 data-i18n="demo1_title">Nura Cafe</h3>
+            <p data-i18n="demo1_desc">Local coffee shop — warm, clear menu and booking CTA.</p>
+          </div>
+        </a>
+        <a href="/demos/fitness/" class="demo-card reveal reveal-delay-2 visible">
+          <div class="demo-card-img"><img src="/demos/fitness/img/hero.jpg" alt="FitPeak" loading="lazy"/></div>
+          <div class="demo-card-body">
+            <h3 data-i18n="demo2_title">FitPeak</h3>
+            <p data-i18n="demo2_desc">Personal trainer — plans, pricing and WhatsApp lead flow.</p>
+          </div>
+        </a>
+        <a href="/demos/studio/" class="demo-card reveal reveal-delay-3 visible">
+          <div class="demo-card-img"><img src="/demos/studio/img/hero.jpg" alt="Lumen Studio" loading="lazy"/></div>
+          <div class="demo-card-body">
+            <h3 data-i18n="demo3_title">Lumen Studio</h3>
+            <p data-i18n="demo3_desc">Design studio — minimal portfolio in English.</p>
+          </div>
+        </a>
+        <a href="/demos/realty/" class="demo-card reveal visible">
+          <div class="demo-card-img"><img src="/demos/realty/img/hero.jpg" alt="Real estate" loading="lazy"/></div>
+          <div class="demo-card-body">
+            <h3>נכסים פלוס</h3>
+            <p>Real estate agency — listings and consultation CTA.</p>
+          </div>
+        </a>
+        <a href="/demos/beauty/" class="demo-card reveal reveal-delay-1 visible">
+          <div class="demo-card-img"><img src="/demos/beauty/img/hero.jpg" alt="Glow Studio" loading="lazy"/></div>
+          <div class="demo-card-body">
+            <h3>Glow Studio</h3>
+            <p>Beauty & spa — treatments and booking.</p>
+          </div>
+        </a>
+        <a href="/demos/lawyer/" class="demo-card reveal reveal-delay-2 visible">
+          <div class="demo-card-img"><img src="/demos/lawyer/img/hero.jpg" alt="Law firm" loading="lazy"/></div>
+          <div class="demo-card-body">
+            <h3>כהן ושות׳</h3>
+            <p>Law firm — practice areas and consultation.</p>
+          </div>
+        </a>
+      </div>
+      <div class="demos-all">
+        <a href="/demos/">View all demos →</a>
+      </div>
+
+      <div style="text-align:center;margin-top:28px" class="reveal">
+        <a href="/demos/" class="btn btn-outline" data-i18n="demos_all">View all demos</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 data-i18n="how_title">How it works</h2>
+        <p data-i18n="how_subtitle">From first message to a live website — usually within 48 hours.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal reveal-delay-1">
+          <div class="step-number">1</div>
+          <h3 data-i18n="step1_title">Tell me what you need</h3>
+          <p data-i18n="step1_desc">Share your business details, goals, and any inspiration. A short call or WhatsApp message is enough.</p>
+        </div>
+        <div class="step reveal reveal-delay-2">
+          <div class="step-number">2</div>
+          <h3 data-i18n="step2_title">AI + human design</h3>
+          <p data-i18n="step2_desc">I use advanced AI tools combined with professional oversight to create a unique, high-quality website.</p>
+        </div>
+        <div class="step reveal reveal-delay-3">
+          <div class="step-number">3</div>
+          <h3 data-i18n="step3_title">Review & refine</h3>
+          <p data-i18n="step3_desc">You review the site, request changes, and we polish it until you're 100% happy.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-number">4</div>
+          <h3 data-i18n="step4_title">Go live with domain</h3>
+          <p data-i18n="step4_desc">I register the domain, connect everything, and hand you a fully working website.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="benefits">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 data-i18n="benefits_title">Why choose NexaSites</h2>
+        <p data-i18n="benefits_subtitle">A complete service — not just a website generator.</p>
+      </div>
+      <div class="benefits-grid">
+        <div class="benefit-card reveal reveal-delay-1"><div class="benefit-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><h3 data-i18n="ben1_title">Lightning fast delivery</h3><p data-i18n="ben1_desc">Most websites are ready within 24–48 hours. No weeks of waiting.</p></div>
+        <div class="benefit-card reveal reveal-delay-2"><div class="benefit-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><h3 data-i18n="ben2_title">Domain included</h3><p data-i18n="ben2_desc">I handle domain registration and setup. You get a complete package.</p></div>
+        <div class="benefit-card reveal reveal-delay-3"><div class="benefit-icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0 0 20c1.5 0 2-1 2-2v-1a2 2 0 0 1 2-2h1.5a3.5 3.5 0 0 0 0-7H18a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h.5A9.5 9.5 0 0 0 12 2z"/><circle cx="7.5" cy="10.5" r="1" fill="currentColor" stroke="none"/><circle cx="10.5" cy="7.5" r="1" fill="currentColor" stroke="none"/></svg></div><h3 data-i18n="ben3_title">Modern & unique design</h3><p data-i18n="ben3_desc">AI-powered design that still feels human and tailored to your brand.</p></div>
+        <div class="benefit-card reveal reveal-delay-1"><div class="benefit-icon"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M12 18h.01"/></svg></div><h3 data-i18n="ben4_title">Mobile-first</h3><p data-i18n="ben4_desc">Every site looks perfect on phones, tablets, and desktops.</p></div>
+        <div class="benefit-card reveal reveal-delay-2"><div class="benefit-icon"><svg viewBox="0 0 24 24"><path d="M12 2l8 3v7c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V5l8-3z"/><path d="M9 12l2 2 4-4"/></svg></div><h3 data-i18n="ben5_title">Secure & reliable</h3><p data-i18n="ben5_desc">SSL, fast hosting, and basic maintenance included for the full year.</p></div>
+        <div class="benefit-card reveal reveal-delay-3"><div class="benefit-icon"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8z"/></svg></div><h3 data-i18n="ben6_title">Direct support</h3><p data-i18n="ben6_desc">You talk to me directly — no tickets, no call centers.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 data-i18n="faq_title">Frequently asked questions</h2>
+        <p data-i18n="faq_subtitle">Everything you need to know before getting started.</p>
+      </div>
+      <div class="faq-list reveal">
+        <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq1_q">How long does it take to get my website?</span><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="faq-answer" data-i18n="faq1_a">Most websites are delivered within 24–48 hours after we finalize the details. More complex projects may take a few extra days.</div></div>
+        <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq2_q">Is the domain really included?</span><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="faq-answer" data-i18n="faq2_a">Yes. I register and configure the domain for you as part of every package. You own the domain.</div></div>
+        <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq3_q">What happens after the first year?</span><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="faq-answer" data-i18n="faq3_a">You can renew the package for another year (same price) or take full ownership of the site and host it yourself. The choice is yours.</div></div>
+        <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq4_q">Can I request changes after the site is live?</span><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="faq-answer" data-i18n="faq4_a">Yes. Minor text and image updates are included during the support period. Larger changes can be quoted separately.</div></div>
+        <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span data-i18n="faq5_q">Do I need any technical knowledge?</span><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="faq-answer" data-i18n="faq5_a">Not at all. I handle everything — design, domain, hosting, and setup. You just tell me what you need.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="cta-section reveal">
+        <h2 data-i18n="cta_title">Ready to get your website?</h2>
+        <p data-i18n="cta_subtitle">Send me a message and I'll reply within a few hours with a clear proposal.</p>
+        <a href="#contact" class="btn btn-primary btn-lg" data-i18n="cta_button">Get Started Now</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 data-i18n="contact_title">Let's talk</h2>
+        <p data-i18n="contact_subtitle">Tell me about your project. I'll get back to you quickly.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <h3 data-i18n="contact_info_title">Prefer to message directly?</h3>
+          <p data-i18n="contact_info_desc">I'm available on WhatsApp and email. Feel free to reach out anytime.</p>
+          <div class="contact-methods">
+            <a href="https://wa.me/972000000000" class="contact-method" target="_blank" rel="noopener"><span class="icon"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8z"/></svg></span><span data-i18n="contact_whatsapp">WhatsApp</span></a>
+            <a href="mailto:hello@nexasites.com" class="contact-method"><span class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg></span><span>hello@nexasites.com</span></a>
+          </div>
+        </div>
+        <form class="contact-form reveal reveal-delay-1" onsubmit="handleSubmit(event)">
+          <div class="form-group"><label for="name" data-i18n="form_name">Your name</label><input type="text" id="name" required placeholder="John Cohen" /></div>
+          <div class="form-group"><label for="email" data-i18n="form_email">Email or phone</label><input type="text" id="email" required placeholder="you@example.com" /></div>
+          <div class="form-group"><label for="package" data-i18n="form_package">Interested package</label>
+            <select id="package"><option>Starter — ₪1,000</option><option>Professional — ₪1,500</option><option>Premium — ₪2,000</option><option>Not sure yet</option></select>
+          </div>
+          <div class="form-group"><label for="message" data-i18n="form_message">Tell me about your project</label><textarea id="message" placeholder="What kind of website do you need?"></textarea></div>
+          <button type="submit" class="btn btn-primary btn-full" data-i18n="form_submit">Send Message</button>
+          <p class="form-note" data-i18n="form_note">By submitting you agree to be contacted about your project. No spam.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  </main>
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-copy">© 2026 NexaSites. <span data-i18n="footer_rights">All rights reserved.</span></div>
+      <div class="footer-links">
+        <a href="#packages" data-i18n="nav_packages">Packages</a>
+        <a href="#demos" data-i18n="nav_demos">Demos</a>
+        <a href="#faq" data-i18n="nav_faq">FAQ</a>
+        <a href="#contact" data-i18n="nav_contact">Contact</a>
+        <a href="/demos/">Portfolio</a>
+      </div>
+    </div>
+  </footer>
+
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+
+  <script>
+    // ========== THREE.JS — Stars + solid white continents + depth ==========
+    (function() {
+      const canvas = document.getElementById('webgl');
+      if (!canvas || typeof THREE === 'undefined') return;
+
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setClearColor(0x000000, 0);
+
+      const scene = new THREE.Scene();
+      // Depth fog — stars fade into distance
+      scene.fog = new THREE.FogExp2(0x020617, 0.008);
+
+      // Circular sprite for round stars
+      function createCircleTexture() {
+        const c = document.createElement('canvas');
+        c.width = 64; c.height = 64;
+        const ctx = c.getContext('2d');
+        const g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+        g.addColorStop(0, 'rgba(255,255,255,1)');
+        g.addColorStop(0.25, 'rgba(255,255,255,0.9)');
+        g.addColorStop(0.5, 'rgba(255,255,255,0.35)');
+        g.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, 64, 64);
+        const tex = new THREE.CanvasTexture(c);
+        tex.needsUpdate = true;
+        return tex;
+      }
+      const circleTexture = createCircleTexture();
+
+
+      const camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.1, 300);
+      camera.position.set(0, 0, 18);
+      camera.lookAt(0, 0, 0);
+
+      // ===== Star layers (different depths for parallax) =====
+      function makeStars(count, spread, size, opacity, zBias) {
+        const pos = new Float32Array(count * 3);
+        const col = new Float32Array(count * 3);
+        for (let i = 0; i < count; i++) {
+          const i3 = i * 3;
+          pos[i3] = (Math.random() - 0.5) * spread;
+          pos[i3+1] = (Math.random() - 0.5) * spread * 0.65;
+          pos[i3+2] = (Math.random() - 0.5) * spread * 0.8 + zBias;
+          const s = 0.75 + Math.random() * 0.25;
+          col[i3] = s; col[i3+1] = s; col[i3+2] = Math.min(1, s + 0.08);
+        }
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+        geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+        const mat = new THREE.PointsMaterial({
+          size: size, vertexColors: true, transparent: true, opacity: opacity,
+          sizeAttenuation: true, blending: THREE.AdditiveBlending, depthWrite: false,
+          map: circleTexture, alphaTest: 0.01
+        });
+        return { mesh: new THREE.Points(geo, mat), mat: mat };
+      }
+
+      const nearStars = makeStars(900, 50, 0.09, 0.95, -5);
+      const midStars = makeStars(1200, 75, 0.06, 0.75, -20);
+      const farStars = makeStars(800, 100, 0.04, 0.5, -40);
+      scene.add(nearStars.mesh);
+      scene.add(midStars.mesh);
+      scene.add(farStars.mesh);
+
+      // Bright near stars
+      const bPos = new Float32Array(50 * 3);
+      for (let i = 0; i < 50; i++) {
+        bPos[i*3] = (Math.random()-0.5)*45;
+        bPos[i*3+1] = (Math.random()-0.5)*30;
+        bPos[i*3+2] = (Math.random()-0.5)*30 - 5;
+      }
+      const brightStars = new THREE.Points(
+        new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(bPos, 3)),
+        new THREE.PointsMaterial({
+          color: 0xffffff, size: 0.18, transparent: true, opacity: 1,
+          sizeAttenuation: true, blending: THREE.AdditiveBlending, depthWrite: false,
+          map: circleTexture, alphaTest: 0.01
+        })
+      );
+      scene.add(brightStars);
+
+      // ===== Shooting stars (falling stars) =====
+      const shootingStars = [];
+      const SHOOT_COUNT = 14;
+
+      function resetShootingStar(s, initial) {
+        s.pos.set(
+          (Math.random() - 0.5) * 55,
+          10 + Math.random() * 22,
+          -8 - Math.random() * 30
+        );
+        const dir = Math.random() > 0.5 ? 1 : -1;
+        s.vel.set(
+          dir * (0.1 + Math.random() * 0.18),
+          -(0.18 + Math.random() * 0.28),
+          0.02 + Math.random() * 0.05
+        );
+        s.life = initial ? Math.random() * 0.9 : 0;
+        s.maxLife = 0.9 + Math.random() * 1.2;
+        s.speed = 1.0 + Math.random() * 1.6;
+        s.trailLength = 10 + Math.floor(Math.random() * 10);
+      }
+
+      for (let i = 0; i < SHOOT_COUNT; i++) {
+        const positions = new Float32Array(20 * 3); // trail points
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const mat = new THREE.PointsMaterial({
+          color: 0xffffff,
+          size: 0.14,
+          transparent: true,
+          opacity: 0,
+          sizeAttenuation: true,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false,
+          map: circleTexture,
+          alphaTest: 0.01
+        });
+        const head = new THREE.Points(geo, mat);
+
+        // Trail line
+        const trailPos = new Float32Array(12 * 3);
+        const trailGeo = new THREE.BufferGeometry();
+        trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPos, 3));
+        const trailMat = new THREE.LineBasicMaterial({
+          color: 0xffffff,
+          transparent: true,
+          opacity: 0,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false
+        });
+        const trail = new THREE.Line(trailGeo, trailMat);
+
+        scene.add(head);
+        scene.add(trail);
+
+        const s = {
+          pos: new THREE.Vector3(),
+          vel: new THREE.Vector3(),
+          life: 0,
+          maxLife: 1,
+          speed: 1,
+          head: head,
+          trail: trail,
+          history: []
+        };
+        resetShootingStar(s, true);
+        s.life = Math.random(); // stagger
+        shootingStars.push(s);
+      }
+
+      function updateShootingStars(dt) {
+        for (let i = 0; i < shootingStars.length; i++) {
+          const s = shootingStars[i];
+          s.life += dt * s.speed * 0.35;
+
+          if (s.life > s.maxLife || s.pos.y < -15) {
+            resetShootingStar(s, false);
+            s.life = 0;
+            s.history = [];
+            continue;
+          }
+
+          // Delay before appearing
+          if (s.life < 0.05) {
+            s.head.material.opacity = 0;
+            s.trail.material.opacity = 0;
+            continue;
+          }
+
+          s.pos.x += s.vel.x * s.speed * 2.5;
+          s.pos.y += s.vel.y * s.speed * 2.5;
+          s.pos.z += s.vel.z * s.speed * 2.5;
+
+          s.history.unshift(s.pos.clone());
+          if (s.history.length > 12) s.history.pop();
+
+          // Head
+          const hp = s.head.geometry.attributes.position.array;
+          hp[0] = s.pos.x; hp[1] = s.pos.y; hp[2] = s.pos.z;
+          // fade trail points at head only
+          for (let k = 1; k < 20; k++) {
+            hp[k*3] = s.pos.x; hp[k*3+1] = s.pos.y; hp[k*3+2] = s.pos.z;
+          }
+          s.head.geometry.attributes.position.needsUpdate = true;
+
+          // Trail line
+          const tp = s.trail.geometry.attributes.position.array;
+          for (let k = 0; k < 12; k++) {
+            const p = s.history[k] || s.pos;
+            tp[k*3] = p.x; tp[k*3+1] = p.y; tp[k*3+2] = p.z;
+          }
+          s.trail.geometry.attributes.position.needsUpdate = true;
+
+          const fade = Math.sin((s.life / s.maxLife) * Math.PI);
+          s.head.material.opacity = fade * 1.0;
+          s.trail.material.opacity = fade * 0.7;
+          s.head.material.size = 0.12 + fade * 0.12;
+        }
+      }
+
+
+      
+      // Earth removed per request
+
+      // Mouse parallax for depth
+      let mouseX = 0, mouseY = 0;
+      let targetCamX = 0, targetCamY = 3.8;
+      document.addEventListener('mousemove', function(e) {
+        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+      });
+
+      window.addEventListener('resize', function() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      const clock = new THREE.Clock();
+      function animate() {
+        requestAnimationFrame(animate);
+        const t = clock.getElapsedTime();
+
+        // Star layers — different speeds = depth
+        nearStars.mesh.rotation.y = t * 0.012;
+        midStars.mesh.rotation.y = t * 0.007;
+        farStars.mesh.rotation.y = t * 0.003;
+        nearStars.mesh.rotation.x = Math.sin(t * 0.04) * 0.02;
+        brightStars.rotation.y = t * 0.01;
+        nearStars.mat.opacity = 0.85 + Math.sin(t * 1.3) * 0.1;
+
+        // Gentle Earth spin
+        // earth removed
+
+        // Camera parallax — 3D depth feel
+        targetCamX = mouseX * 1.2;
+        targetCamY = mouseY * 0.8;
+        camera.position.x += (targetCamX - camera.position.x) * 0.04;
+        camera.position.y += (targetCamY - camera.position.y) * 0.04;
+        camera.lookAt(0, 0, 0);
+
+        // Star parallax with mouse
+        nearStars.mesh.position.x = mouseX * -0.8;
+        midStars.mesh.position.x = mouseX * -0.4;
+        farStars.mesh.position.x = mouseX * -0.15;
+
+        // Shooting stars
+        updateShootingStars(0.02);
+
+        renderer.render(scene, camera);
+      }
+      animate();
+    })();
+
+    // ========== SITE LOGIC ==========
+    const translations = {
+      en: {
+        nav_packages:"Packages", nav_how:"How it works", nav_benefits:"Why us", nav_faq:"FAQ", nav_contact:"Contact", nav_cta:"Get a Quote", nav_admin:"Admin Demo", nav_demos:"Demos",
+        demos_title:"Live demos", demos_subtitle:"Real examples of sites we build — open any of them.",
+        demo1_title:"Nura Cafe", demo1_desc:"Local coffee shop — warm, clear menu and booking CTA.",
+        demo2_title:"FitPeak", demo2_desc:"Personal trainer — plans, pricing and WhatsApp lead flow.",
+        demo3_title:"Lumen Studio", demo3_desc:"Design studio — minimal portfolio in English.",
+        demos_all:"View all demos",
+        hero_badge:"We Build Your Online Presence",
+        hero_title_1:"Professional websites", hero_title_2:"built with AI",
+        hero_subtitle:"I create modern, high-converting websites for businesses and freelancers using advanced AI. Domain included. From ₪1,000 per year.",
+        hero_cta_primary:"Start Your Project", hero_cta_secondary:"View Packages",
+        stat_1:"Average delivery", stat_2:"Starting price / year", stat_3:"Domain included",
+        packages_title:"Simple, transparent pricing", packages_subtitle:"Choose the package that fits your needs. All plans include domain registration and basic maintenance for one year.",
+        pkg1_name:"Starter", pkg1_desc:"Perfect for freelancers and small businesses that need a clean online presence.",
+        pkg1_f1:"1–3 page modern website", pkg1_f2:"Custom domain included", pkg1_f3:"Mobile-responsive design", pkg1_f4:"Contact form + WhatsApp button", pkg1_f5:"Basic SEO setup", pkg1_f6:"1 year hosting & support",
+        pkg2_name:"Professional", pkg2_desc:"Ideal for growing businesses that want a stronger online presence and more features.",
+        pkg2_f1:"Up to 6 pages + blog", pkg2_f2:"Premium custom domain", pkg2_f3:"Advanced design & animations", pkg2_f4:"Lead capture forms", pkg2_f5:"Google Analytics + SEO", pkg2_f6:"Priority support (1 year)",
+        pkg3_name:"Premium", pkg3_desc:"Full-featured solution for businesses that need maximum impact and customization.",
+        pkg3_f1:"Unlimited pages + advanced features", pkg3_f2:"Premium domain + email", pkg3_f3:"Custom design system", pkg3_f4:"Multi-language support", pkg3_f5:"Full SEO + performance optimization", pkg3_f6:"Dedicated support & updates",
+        pkg1_price:"$299", pkg2_price:"$449", pkg3_price:"$599", per_year:"/ year", pkg_cta:"Choose Starter", pkg_cta2:"Choose Professional", pkg_cta3:"Choose Premium",
+        how_title:"How it works", how_subtitle:"From first message to a live website — usually within 48 hours.",
+        step1_title:"Tell me what you need", step1_desc:"Share your business details, goals, and any inspiration. A short call or WhatsApp message is enough.",
+        step2_title:"AI + human design", step2_desc:"I use advanced AI tools combined with professional oversight to create a unique, high-quality website.",
+        step3_title:"Review & refine", step3_desc:"You review the site, request changes, and we polish it until you're 100% happy.",
+        step4_title:"Go live with domain", step4_desc:"I register the domain, connect everything, and hand you a fully working website.",
+        benefits_title:"Why choose NexaSites", benefits_subtitle:"A complete service — not just a website generator.",
+        ben1_title:"Lightning fast delivery", ben1_desc:"Most websites are ready within 24–48 hours. No weeks of waiting.",
+        ben2_title:"Domain included", ben2_desc:"I handle domain registration and setup. You get a complete package.",
+        ben3_title:"Modern & unique design", ben3_desc:"AI-powered design that still feels human and tailored to your brand.",
+        ben4_title:"Mobile-first", ben4_desc:"Every site looks perfect on phones, tablets, and desktops.",
+        ben5_title:"Secure & reliable", ben5_desc:"SSL, fast hosting, and basic maintenance included for the full year.",
+        ben6_title:"Direct support", ben6_desc:"You talk to me directly — no tickets, no call centers.",
+        faq_title:"Frequently asked questions", faq_subtitle:"Everything you need to know before getting started.",
+        faq1_q:"How long does it take to get my website?", faq1_a:"Most websites are delivered within 24–48 hours after we finalize the details. More complex projects may take a few extra days.",
+        faq2_q:"Is the domain really included?", faq2_a:"Yes. I register and configure the domain for you as part of every package. You own the domain.",
+        faq3_q:"What happens after the first year?", faq3_a:"You can renew the package for another year (same price) or take full ownership of the site and host it yourself. The choice is yours.",
+        faq4_q:"Can I request changes after the site is live?", faq4_a:"Yes. Minor text and image updates are included during the support period. Larger changes can be quoted separately.",
+        faq5_q:"Do I need any technical knowledge?", faq5_a:"Not at all. I handle everything — design, domain, hosting, and setup. You just tell me what you need.",
+        cta_title:"Ready to get your website?", cta_subtitle:"Send me a message and I'll reply within a few hours with a clear proposal.", cta_button:"Get Started Now",
+        contact_title:"Let's talk", contact_subtitle:"Tell me about your project. I'll get back to you quickly.",
+        contact_info_title:"Prefer to message directly?", contact_info_desc:"I'm available on WhatsApp and email. Feel free to reach out anytime.", contact_whatsapp:"WhatsApp",
+        form_name:"Your name", form_email:"Email or phone", form_package:"Interested package", form_message:"Tell me about your project", form_submit:"Send Message",
+        form_note:"By submitting you agree to be contacted about your project. No spam.", footer_rights:"All rights reserved.", form_success:"Thank you! I'll get back to you soon."
+      },
+      he: {
+        nav_packages:"חבילות", nav_how:"איך זה עובד", nav_benefits:"למה אנחנו", nav_faq:"שאלות נפוצות", nav_contact:"צור קשר", nav_cta:"קבל הצעת מחיר", nav_admin:"פאנל לקוח", nav_demos:"דמואים", demos_title:"דמואים חיים", demos_subtitle:"דוגמאות אמיתיות לאתרים שאנחנו בונים — לחצו ופתחו.",
+        demo1_title:"קפה נורה", demo1_desc:"בית קפה שכונתי — תפריט ברור וקריאה להזמנה.",
+        demo2_title:"FitPeak", demo2_desc:"מאמן אישי — מסלולים, מחירים ולידים בוואטסאפ.",
+        demo3_title:"Lumen Studio", demo3_desc:"סטודיו לעיצוב — פורטפוליו מינימליסטי באנגלית.",
+        demos_all:"כל הדמואים", 
+        hero_badge:"בונים לכם נוכחות אונליין",
+        hero_title_1:"אתרים מקצועיים", hero_title_2:"בנויים עם AI",
+        hero_subtitle:"אני בונה אתרים מודרניים וממירים לעסקים ולעצמאים באמצעות AI מתקדם. דומיין כלול. החל מ-₪1,000 לשנה.",
+        hero_cta_primary:"התחל את הפרויקט", hero_cta_secondary:"צפה בחבילות",
+        stat_1:"זמן אספקה ממוצע", stat_2:"מחיר התחלתי / שנה", stat_3:"דומיין כלול",
+        packages_title:"תמחור פשוט ושקוף", packages_subtitle:"בחר את החבילה שמתאימה לך. כל התוכניות כוללות רישום דומיין ותחזוקה בסיסית לשנה.",
+        pkg1_name:"Starter", pkg1_desc:"מושלם לעצמאים ועסקים קטנים שצריכים נוכחות אונליין נקייה.",
+        pkg1_f1:"אתר מודרני 1–3 עמודים", pkg1_f2:"דומיין מותאם אישית כלול", pkg1_f3:"עיצוב רספונסיבי למובייל", pkg1_f4:"טופס יצירת קשר + כפתור וואטסאפ", pkg1_f5:"הגדרת SEO בסיסית", pkg1_f6:"שנה אחסון ותמיכה",
+        pkg2_name:"Professional", pkg2_desc:"אידיאלי לעסקים בצמיחה שרוצים נוכחות חזקה יותר ויותר פיצ'רים.",
+        pkg2_f1:"עד 6 עמודים + בלוג", pkg2_f2:"דומיין פרימיום", pkg2_f3:"עיצוב מתקדם ואנימציות", pkg2_f4:"טפסי לידים", pkg2_f5:"Google Analytics + SEO", pkg2_f6:"תמיכה מועדפת (שנה)",
+        pkg3_name:"Premium", pkg3_desc:"פתרון מלא לעסקים שצריכים השפעה מקסימלית והתאמה אישית.",
+        pkg3_f1:"עמודים ללא הגבלה + פיצ'רים מתקדמים", pkg3_f2:"דומיין פרימיום + אימייל", pkg3_f3:"מערכת עיצוב מותאמת", pkg3_f4:"תמיכה בריבוי שפות", pkg3_f5:"SEO מלא + אופטימיזציית ביצועים", pkg3_f6:"תמיכה ייעודית ועדכונים",
+        pkg1_price:"$299", pkg2_price:"₪1,500", pkg3_price:"₪2,000", per_year:"/ שנה", pkg_cta:"בחר Starter", pkg_cta2:"בחר Professional", pkg_cta3:"בחר Premium",
+        how_title:"איך זה עובד", how_subtitle:"מהודעה ראשונה ועד אתר חי — בדרך כלל תוך 48 שעות.",
+        step1_title:"ספר לי מה אתה צריך", step1_desc:"שתף פרטי עסק, מטרות והשראה. שיחה קצרה או הודעת וואטסאפ מספיקים.",
+        step2_title:"AI + עיצוב אנושי", step2_desc:"אני משתמש בכלי AI מתקדמים בשילוב פיקוח מקצועי כדי ליצור אתר ייחודי ואיכותי.",
+        step3_title:"סקירה ושיפורים", step3_desc:"אתה בודק את האתר, מבקש שינויים, ואנחנו משפרים עד שתהיה 100% מרוצה.",
+        step4_title:"עלייה לאוויר עם דומיין", step4_desc:"אני רושם את הדומיין, מחבר הכל, ומוסר לך אתר עובד במלואו.",
+        benefits_title:"למה לבחור ב-NexaSites", benefits_subtitle:"שירות מלא — לא רק מחולל אתרים.",
+        ben1_title:"אספקה מהירה במיוחד", ben1_desc:"רוב האתרים מוכנים תוך 24–48 שעות. בלי שבועות של המתנה.",
+        ben2_title:"דומיין כלול", ben2_desc:"אני מטפל ברישום והגדרת הדומיין. אתה מקבל חבילה מלאה.",
+        ben3_title:"עיצוב מודרני וייחודי", ben3_desc:"עיצוב מבוסס AI שעדיין מרגיש אנושי ומותאם למותג שלך.",
+        ben4_title:"מובייל-פרסט", ben4_desc:"כל אתר נראה מושלם בטלפון, טאבלט ומחשב.",
+        ben5_title:"מאובטח ואמין", ben5_desc:"SSL, אחסון מהיר ותחזוקה בסיסית כלולים לשנה המלאה.",
+        ben6_title:"תמיכה ישירה", ben6_desc:"אתה מדבר איתי ישירות — בלי טיקטים ובלי מוקדים.",
+        faq_title:"שאלות נפוצות", faq_subtitle:"כל מה שצריך לדעת לפני שמתחילים.",
+        faq1_q:"כמה זמן לוקח לקבל את האתר?", faq1_a:"רוב האתרים נמסרים תוך 24–48 שעות אחרי שמסיימים את הפרטים. פרויקטים מורכבים יותר עשויים לקחת כמה ימים נוספים.",
+        faq2_q:"הדומיין באמת כלול?", faq2_a:"כן. אני רושם ומגדיר את הדומיין בשבילך כחלק מכל חבילה. הדומיין שייך לך.",
+        faq3_q:"מה קורה אחרי השנה הראשונה?", faq3_a:"אפשר לחדש את החבילה לשנה נוספת (באותו מחיר) או לקחת בעלות מלאה על האתר ולארח אותו בעצמך. הבחירה שלך.",
+        faq4_q:"אפשר לבקש שינויים אחרי שהאתר באוויר?", faq4_a:"כן. עדכוני טקסט ותמונות קטנים כלולים בתקופת התמיכה. שינויים גדולים יותר מתומחרים בנפרד.",
+        faq5_q:"צריך ידע טכני?", faq5_a:"בכלל לא. אני מטפל בהכל — עיצוב, דומיין, אחסון והגדרות. אתה רק מספר לי מה אתה צריך.",
+        cta_title:"מוכן לקבל את האתר שלך?", cta_subtitle:"שלח לי הודעה ואחזור אליך תוך כמה שעות עם הצעה ברורה.", cta_button:"התחל עכשיו",
+        contact_title:"בוא נדבר", contact_subtitle:"ספר לי על הפרויקט שלך. אחזור אליך במהירות.",
+        contact_info_title:"מעדיף לשלוח הודעה ישירות?", contact_info_desc:"אני זמין בוואטסאפ ובאימייל. תרגיש חופשי לפנות בכל זמן.", contact_whatsapp:"וואטסאפ",
+        form_name:"השם שלך", form_email:"אימייל או טלפון", form_package:"חבילה שמעניינת", form_message:"ספר לי על הפרויקט", form_submit:"שלח הודעה",
+        form_note:"בשליחה אתה מסכים שיצרו איתך קשר לגבי הפרויקט. בלי ספאם.", footer_rights:"כל הזכויות שמורות.", form_success:"תודה! אחזור אליך בקרוב."
+      },
+      ar: {
+        nav_packages:"الباقات", nav_demos:"نماذج", nav_how:"كيف يعمل", nav_benefits:"لماذا نحن", nav_faq:"أسئلة", nav_contact:"تواصل", nav_cta:"اطلب عرضاً", nav_admin:"لوحة العميل",
+        demos_title:"نماذج حية", demos_subtitle:"أمثلة حقيقية لمواقع نبنيها — افتح أي منها.",
+        demo1_title:"Nura Cafe", demo1_desc:"مقهى محلي — قائمة واضحة ودعوة للحجز.",
+        demo2_title:"FitPeak", demo2_desc:"مدرب شخصي — خطط وأسعار وتواصل واتساب.",
+        demo3_title:"Lumen Studio", demo3_desc:"استوديو تصميم — معرض أعمال بالإنجليزية.",
+        demos_all:"كل النماذج",
+        hero_badge:"نبني حضورك على الإنترنت",
+        hero_title_1:"مواقع احترافية", hero_title_2:"بذكاء اصطناعي",
+        hero_subtitle:"مواقع حديثة للأعمال باستخدام الذكاء الاصطناعي. النطاق مشمول. من ₪1,000 سنوياً.",
+        hero_cta_primary:"ابدأ الآن", hero_cta_secondary:"شاهد الباقات",
+        stat1_num:"48 س", stat1_label:"متوسط التسليم", stat2_num:"₪1K+", stat2_label:"يبدأ من", stat3_num:"100%", stat3_label:"يشمل النطاق",
+        packages_title:"أسعار واضحة", packages_subtitle:"جميع الخطط تشمل النطاق والصيانة لسنة.",
+        pkg1_name:"Starter", pkg1_price:"₪1,000", pkg1_desc:"للمستقلين والشركات الصغيرة.",
+        pkg1_f1:"حتى 5 صفحات", pkg1_f2:"نطاق لسنة", pkg1_f3:"متوافق مع الجوال", pkg1_f4:"نموذج تواصل", pkg1_f5:"SSL واستضافة",
+        pkg2_name:"Professional", pkg2_price:"$449", pkg2_desc:"للأعمال النامية.",
+        pkg2_f1:"حتى 10 صفحات", pkg2_f2:"نطاق + بريد", pkg2_f3:"SEO أساسي", pkg2_f4:"واتساب", pkg2_f5:"معرض أعمال", pkg2_f6:"تعديلان",
+        pkg3_name:"Premium", pkg3_price:"$599", pkg3_desc:"حل كامل مع مميزات متقدمة.",
+        pkg3_f1:"صفحات بلا حد", pkg3_f2:"نطاق مميز + بريد", pkg3_f3:"نظام تصميم مخصص", pkg3_f4:"متعدد اللغات", pkg3_f5:"SEO كامل", pkg3_f6:"دعم مخصص",
+        per_year:"/ سنة", pkg_cta:"اختر Starter", pkg_cta2:"اختر Professional", pkg_cta3:"اختر Premium",
+        how_title:"كيف يعمل", how_subtitle:"من رسالة إلى موقع حي خلال 48 ساعة.",
+        step1_title:"أخبرني بما تحتاج", step1_desc:"تفاصيل العمل والأهداف — واتساب يكفي.",
+        step2_title:"AI + تصميم بشري", step2_desc:"أدوات AI مع إشراف مهني.",
+        step3_title:"مراجعة وتحسين", step3_desc:"تراجع وتطلب تعديلات حتى الرضا.",
+        step4_title:"إطلاق مع النطاق", step4_desc:"أسجل النطاق وأسلم موقعاً جاهزاً.",
+        benefits_title:"لماذا NexaSites", benefits_subtitle:"خدمة كاملة — ليس مجرد مولد مواقع.",
+        ben1_title:"تسليم سريع", ben1_desc:"معظم المواقع خلال 24–48 ساعة.",
+        ben2_title:"النطاق مشمول", ben2_desc:"أتولى تسجيل النطاق وإعداده.",
+        ben3_title:"تصميم حديث", ben3_desc:"تصميم AI يناسب علامتك.",
+        ben4_title:"الجوال أولاً", ben4_desc:"مثالي على الهاتف والكمبيوتر.",
+        ben5_title:"آمن وموثوق", ben5_desc:"SSL واستضافة وصيانة لسنة.",
+        ben6_title:"دعم مباشر", ben6_desc:"تحدث معي مباشرة.",
+        faq_title:"أسئلة شائعة", faq_subtitle:"ما تحتاج معرفته قبل البدء.",
+        faq1_q:"كم يستغرق الموقع؟", faq1_a:"عادة 24–48 ساعة بعد الاتفاق.",
+        faq2_q:"هل النطاق مشمول؟", faq2_a:"نعم. النطاق ملكك.",
+        faq3_q:"بعد السنة الأولى؟", faq3_a:"تجديد بنفس السعر أو استضافة ذاتية.",
+        faq4_q:"تعديلات بعد الإطلاق؟", faq4_a:"تعديلات صغيرة مشمولة.",
+        faq5_q:"معرفة تقنية؟", faq5_a:"لا حاجة — أتولى كل شيء.",
+        cta_title:"جاهز لموقعك؟", cta_subtitle:"راسلني وسأرد خلال ساعات.", cta_button:"ابدأ الآن",
+        form_name:"الاسم", form_email:"البريد", form_phone:"الهاتف", form_message:"الرسالة", form_submit:"إرسال",
+        form_success:"شكراً! سأعود إليك قريباً.",
+        footer_rights:"جميع الحقوق محفوظة."
+      },
+      ru: {
+        nav_packages:"Пакеты", nav_demos:"Демо", nav_how:"Как это работает", nav_benefits:"Почему мы", nav_faq:"FAQ", nav_contact:"Контакты", nav_cta:"Получить предложение", nav_admin:"Панель клиента",
+        demos_title:"Живые демо", demos_subtitle:"Реальные примеры сайтов — откройте любой.",
+        demo1_title:"Nura Cafe", demo1_desc:"Кофейня — меню и запись.",
+        demo2_title:"FitPeak", demo2_desc:"Тренер — тарифы и WhatsApp.",
+        demo3_title:"Lumen Studio", demo3_desc:"Дизайн-студия — портфолио.",
+        demos_all:"Все демо",
+        hero_badge:"Создаём ваше онлайн-присутствие",
+        hero_title_1:"Профессиональные сайты", hero_title_2:"на базе AI",
+        hero_subtitle:"Современные сайты с AI. Домен включён. От ₪1,000 в год.",
+        hero_cta_primary:"Начать", hero_cta_secondary:"Смотреть пакеты",
+        stat1_num:"48 ч", stat1_label:"срок сдачи", stat2_num:"₪1K+", stat2_label:"от", stat3_num:"100%", stat3_label:"домен включён",
+        packages_title:"Прозрачные цены", packages_subtitle:"Все пакеты включают домен и поддержку на год.",
+        pkg1_name:"Starter", pkg1_price:"₪1,000", pkg1_desc:"Для фрилансеров и малого бизнеса.",
+        pkg1_f1:"До 5 страниц", pkg1_f2:"Домен на год", pkg1_f3:"Адаптив", pkg1_f4:"Форма связи", pkg1_f5:"SSL и хостинг",
+        pkg2_name:"Professional", pkg2_price:"$399", pkg2_desc:"Для растущего бизнеса.",
+        pkg2_f1:"До 10 страниц", pkg2_f2:"Домен + email", pkg2_f3:"Базовый SEO", pkg2_f4:"WhatsApp", pkg2_f5:"Галерея", pkg2_f6:"2 правки",
+        pkg3_name:"Premium", pkg3_price:"$549", pkg3_desc:"Полное решение.",
+        pkg3_f1:"Без лимита страниц", pkg3_f2:"Премиум домен", pkg3_f3:"Дизайн-система", pkg3_f4:"Мультиязычность", pkg3_f5:"Полный SEO", pkg3_f6:"Приоритетная поддержка",
+        per_year:"/ год", pkg_cta:"Выбрать Starter", pkg_cta2:"Выбрать Professional", pkg_cta3:"Выбрать Premium",
+        how_title:"Как это работает", how_subtitle:"От сообщения до сайта — за 48 часов.",
+        step1_title:"Расскажите о задаче", step1_desc:"Детали бизнеса — достаточно WhatsApp.",
+        step2_title:"AI + ручная работа", step2_desc:"AI под профессиональным контролем.",
+        step3_title:"Правки", step3_desc:"Вы смотрите сайт и запрашиваете изменения.",
+        step4_title:"Запуск с доменом", step4_desc:"Регистрирую домен и передаю готовый сайт.",
+        benefits_title:"Почему NexaSites", benefits_subtitle:"Полный сервис — не просто генератор.",
+        ben1_title:"Быстрая сдача", ben1_desc:"Большинство сайтов за 24–48 часов.",
+        ben2_title:"Домен включён", ben2_desc:"Регистрация и настройка домена.",
+        ben3_title:"Современный дизайн", ben3_desc:"AI-дизайн с человеческим вкусом.",
+        ben4_title:"Mobile-first", ben4_desc:"Идеально на телефоне и десктопе.",
+        ben5_title:"Безопасность", ben5_desc:"SSL, хостинг, поддержка год.",
+        ben6_title:"Прямая связь", ben6_desc:"Пишете мне напрямую.",
+        faq_title:"Частые вопросы", faq_subtitle:"Всё перед стартом.",
+        faq1_q:"Сколько делается сайт?", faq1_a:"Обычно 24–48 часов.",
+        faq2_q:"Домен включён?", faq2_a:"Да. Домен ваш.",
+        faq3_q:"После первого года?", faq3_a:"Продление или свой хостинг.",
+        faq4_q:"Правки после запуска?", faq4_a:"Мелкие правки включены.",
+        faq5_q:"Нужны тех. знания?", faq5_a:"Нет.",
+        cta_title:"Готовы к сайту?", cta_subtitle:"Напишите — отвечу в течение часов.", cta_button:"Начать",
+        form_name:"Имя", form_email:"Email", form_phone:"Телефон", form_message:"Сообщение", form_submit:"Отправить",
+        form_success:"Спасибо! Скоро свяжусь.",
+        footer_rights:"Все права защищены."
+      }
+    };
+
+    // Regional pricing by language / geography
+    const regionalPrices = {
+      en: { pkg1: '$299', pkg2: '$449', pkg3: '$599', from: 'From $299 / year', range: '$299 – $599', per: '/ year', region: 'US / Global' },
+      he: { pkg1: '₪1,000', pkg2: '₪1,500', pkg3: '₪2,000', from: 'החל מ־₪1,000 לשנה', range: '₪1,000 – ₪2,000', per: '/ שנה', region: 'ישראל' },
+      ar: { pkg1: '$299', pkg2: '$449', pkg3: '$599', from: 'من $299 / سنة', range: '$299 – $599', per: '/ سنة', region: 'الشرق الأوسط' },
+      ru: { pkg1: '$249', pkg2: '$399', pkg3: '$549', from: 'от $249 / год', range: '$249 – $549', per: '/ год', region: 'СНГ' },
+      es: { pkg1: '€279', pkg2: '€419', pkg3: '€549', from: 'Desde €279 / año', range: '€279 – €549', per: '/ año', region: 'ES / LATAM' },
+      de: { pkg1: '€299', pkg2: '€449', pkg3: '€599', from: 'Ab €299 / Jahr', range: '€299 – €599', per: '/ Jahr', region: 'DE / EU' }
+    };
+    const langMeta = {
+      en: { label: 'English', dir: 'ltr', badge: 'Most Popular' },
+      he: { label: 'עברית', dir: 'rtl', badge: 'הכי פופולרי' },
+      ar: { label: 'العربية', dir: 'rtl', badge: 'الأكثر طلباً' },
+      ru: { label: 'Русский', dir: 'ltr', badge: 'Популярный' },
+      es: { label: 'Español', dir: 'ltr', badge: 'Más popular' },
+      de: { label: 'Deutsch', dir: 'ltr', badge: 'Beliebt' }
+    };
+    let currentLang = 'en';
+    function setLanguage(lang) {
+      if (!langMeta[lang]) lang = 'en';
+      currentLang = lang;
+      // Text: use lang translations or fall back to English
+      const t = Object.assign({}, translations.en, translations[lang] || {});
+      const meta = langMeta[lang] || langMeta.en;
+      const prices = regionalPrices[lang] || regionalPrices.en;
+      document.documentElement.lang = lang;
+      document.documentElement.dir = meta.dir;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.textContent = t[key];
+      });
+      // Geographic prices
+      document.querySelectorAll('[data-i18n="pkg1_price" data-i18n-price="starter"]').forEach(el => { el.textContent = prices.pkg1; });
+      document.querySelectorAll('[data-i18n="pkg2_price" data-i18n-price="growth"]').forEach(el => { el.textContent = prices.pkg2; });
+      document.querySelectorAll('[data-i18n="pkg3_price" data-i18n-price="pro"]').forEach(el => { el.textContent = prices.pkg3; });
+      document.querySelectorAll('[data-i18n="per_year" data-i18n-price="per"]').forEach(el => { el.textContent = prices.per; });
+      document.querySelectorAll('[data-price-from]').forEach(el => { el.textContent = prices.from; });
+      document.querySelectorAll('[data-price-range]').forEach(el => { el.textContent = prices.range; });
+      const label = document.getElementById('langLabel');
+      if (label) label.textContent = meta.label;
+      const regionLabel = document.getElementById('langRegion');
+      if (regionLabel) regionLabel.textContent = prices.region;
+      document.querySelectorAll('.lang-option').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+      const featured = document.querySelector('.package-card.featured');
+      if (featured) featured.setAttribute('data-badge', meta.badge);
+      const dd = document.getElementById('langDropdown');
+      if (dd) dd.classList.remove('open');
+      const toggle = document.getElementById('langToggle');
+      if (toggle) toggle.setAttribute('aria-expanded', 'false');
+      try { localStorage.setItem('nexa_lang', lang); } catch (e) {}
+    }
+    (function initLangDropdown() {
+      const dd = document.getElementById('langDropdown');
+      const toggle = document.getElementById('langToggle');
+      if (!dd || !toggle) return;
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const open = dd.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      document.querySelectorAll('.lang-option').forEach(btn => {
+        btn.addEventListener('click', () => setLanguage(btn.getAttribute('data-lang')));
+      });
+      document.addEventListener('click', () => {
+        dd.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    })();
+
+    (function detectRegionLang() {
+      try {
+        if (localStorage.getItem('nexa_lang')) {
+          setLanguage(localStorage.getItem('nexa_lang'));
+          return;
+        }
+      } catch (e) {}
+      let lang = 'en';
+      const nav = (navigator.language || 'en').toLowerCase();
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      if (tz === 'Asia/Jerusalem' || nav.startsWith('he')) lang = 'he';
+      else if (nav.startsWith('ar')) lang = 'ar';
+      else if (nav.startsWith('ru')) lang = 'ru';
+      else if (nav.startsWith('es')) lang = 'es';
+      else if (nav.startsWith('de')) lang = 'de';
+      else if (tz.startsWith('Europe/')) lang = 'de';
+      setLanguage(lang);
+    })();
+
+    (function(){
+      const btn = document.getElementById('backTop');
+      if (btn) {
+        window.addEventListener('scroll', () => btn.classList.toggle('show', window.scrollY > 500), { passive: true });
+        btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+      }
+    })();
+    document.getElementById('mobileMenuBtn').addEventListener('click', () => document.getElementById('mobileNav').classList.toggle('open'));
+    document.querySelectorAll('#mobileNav a').forEach(l => l.addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open')));
+
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 30));
+
+    const reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+      reveals.forEach(el => observer.observe(el));
+    }
+    // Fallback: never leave content invisible
+    setTimeout(function () {
+      document.querySelectorAll('.reveal:not(.visible)').forEach(function (el) {
+        el.classList.add('visible');
+      });
+    }, 1200);
+
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    }
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const success = document.getElementById('formSuccess');
+      try {
+        const leads = JSON.parse(localStorage.getItem('nexa_leads') || '[]');
+        leads.unshift({
+          name: (document.getElementById('name') || {}).value || '',
+          email: (document.getElementById('email') || {}).value || '',
+          package: (document.getElementById('package') || {}).value || '',
+          at: new Date().toISOString()
+        });
+        localStorage.setItem('nexa_leads', JSON.stringify(leads.slice(0, 50)));
+      } catch (err) {}
+      form.style.display = 'none';
+      if (success) {
+        success.classList.add('show');
+        const t = translations[currentLang] || translations.en;
+        const h = success.querySelector('h3');
+        if (h && t.form_success) h.textContent = t.form_success;
+      }
+    }
+
+    setLanguage((function(){ try { return localStorage.getItem('nexa_lang') || 'en'; } catch(e) { return 'en'; } })());
+  </script>
+
+  <script src="/js/countries.js"></script>
+  <script src="/js/geo.js"></script>
+  <script src="/js/country-selector.js"></script>
+  <script>
+    window.addEventListener('nexa:country', function(ev) {
+      const c = ev.detail && ev.detail.country;
+      if (!c) return;
+      const sel = document.getElementById('package');
+      if (sel && sel.options.length >= 3) {
+        sel.options[0].text = 'Starter — ' + c.pricing.display.starter;
+        sel.options[1].text = 'Growth — ' + c.pricing.display.growth;
+        sel.options[2].text = 'Pro — ' + c.pricing.display.pro;
+      }
+    });
+
+    
+    // ===== Scroll-scrubbed background video =====
+    (function initBgScrollVideo() {
+      const video = document.getElementById('bgScrollVideo');
+      if (!video) return;
+
+      let duration = 0;
+      let ticking = false;
+      let lastTime = -1;
+      let ready = false;
+
+      function setTimeFromScroll() {
+        if (!ready || !duration) return;
+        const doc = document.documentElement;
+        const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+        const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+        // Map full page scroll to full video timeline
+        let t = progress * duration;
+        // Avoid seeking same frame repeatedly
+        if (Math.abs(t - lastTime) < 0.04) return;
+        lastTime = t;
+        try {
+          // Some browsers need slightly less than duration
+          video.currentTime = Math.min(t, duration - 0.05);
+        } catch (e) {}
+      }
+
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          setTimeFromScroll();
+          ticking = false;
+        });
+      }
+
+      function onReady() {
+        duration = video.duration || 0;
+        if (!duration || !isFinite(duration)) return;
+        ready = true;
+        video.classList.add('ready');
+        // Pause — we only scrub, never play normally
+        try { video.pause(); } catch (e) {}
+        setTimeFromScroll();
+      }
+
+      video.addEventListener('loadedmetadata', onReady);
+      if (video.readyState >= 1) onReady();
+
+      video.addEventListener('error', function () {
+        // Keep static image background if video missing
+        video.style.display = 'none';
+      });
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+    })();
+
+    // ===== First-visit intro video =====
+    (function initIntro() {
+      const KEY = 'nexa_intro_seen';
+      const overlay = document.getElementById('introOverlay');
+      const video = document.getElementById('introVideo');
+      const skip = document.getElementById('introSkip');
+      if (!overlay) return;
+
+      function dismiss() {
+        try { localStorage.setItem(KEY, '1'); } catch (e) {}
+        overlay.classList.add('hide');
+        document.body.classList.remove('intro-active');
+        overlay.setAttribute('aria-hidden', 'true');
+        if (video) { try { video.pause(); } catch (e) {} }
+        setTimeout(function() { overlay.style.display = 'none'; }, 750);
+      }
+
+      try {
+        if (localStorage.getItem(KEY) === '1') {
+          overlay.style.display = 'none';
+          overlay.classList.add('hide');
+          return;
+        }
+      } catch (e) {}
+
+      document.body.classList.add('intro-active');
+
+      if (skip) {
+        var isHe = (document.documentElement.lang || '').indexOf('he') === 0 || document.documentElement.dir === 'rtl';
+        skip.innerHTML = isHe ? 'דלג <span aria-hidden="true">←</span>' : 'Skip <span aria-hidden="true">→</span>';
+        skip.addEventListener('click', dismiss);
+      }
+
+      if (video) {
+        video.muted = true;
+        video.setAttribute('playsinline', '');
+        var p = video.play();
+        if (p && p.catch) {
+          p.catch(function() {
+            overlay.classList.add('no-video');
+            setTimeout(dismiss, 1800);
+          });
+        }
+        video.addEventListener('ended', dismiss);
+        video.addEventListener('error', function() {
+          overlay.classList.add('no-video');
+          setTimeout(dismiss, 1800);
+        });
+        video.addEventListener('click', dismiss);
+      } else {
+        setTimeout(dismiss, 1500);
+      }
+
+      document.addEventListener('keydown', function onKey(e) {
+        if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          dismiss();
+          document.removeEventListener('keydown', onKey);
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>

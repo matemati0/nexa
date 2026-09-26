@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Harbor Roast — בית קפה שכונתי</title>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--cream:#f7f0e8;--paper:#fffaf5;--ink:#2a2118;--muted:#8a7a6b;--roast:#6f4e37;--latte:#c4a484;--radius:4px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Heebo,sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;padding-bottom:70px}
+.serif{font-family:'Frank Ruhl Libre',serif}
+.container{max-width:1080px;margin:0 auto;padding:0 22px}
+header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(247,240,232,.9);backdrop-filter:blur(12px);border-bottom:1px solid rgba(42,33,24,.08)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{font-family:'Frank Ruhl Libre',serif;font-size:1.6rem;text-decoration:none;color:var(--ink)}
+.logo em{font-style:italic;color:var(--roast)}
+nav{display:flex;gap:28px}
+nav a{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500}
+nav a:hover{color:var(--roast)}
+.btn{display:inline-flex;padding:12px 24px;font-weight:600;font-size:.9rem;text-decoration:none;border:none;cursor:pointer;font-family:inherit;transition:.3s}
+.btn-fill{background:var(--roast);color:#fff}
+.btn-fill:hover{background:#5a3e2b}
+.btn-line{background:transparent;border:1.5px solid var(--roast);color:var(--roast)}
+.hero{padding:120px 0 60px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.hero-tag{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--roast);margin-bottom:14px;font-weight:600}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-size:clamp(2.4rem,5vw,3.6rem);font-weight:500;line-height:1.2;margin-bottom:16px}
+.hero p{color:var(--muted);margin-bottom:28px;max-width:380px}
+.hero-img{height:460px;overflow:hidden;border-radius:2px}
+.hero-img img{width:100%;height:100%;object-fit:cover}
+.divider{height:1px;background:rgba(42,33,24,.1);margin:0 auto;max-width:1080px}
+section{padding:80px 0}
+.center{text-align:center}
+.section-title{font-family:'Frank Ruhl Libre',serif;font-size:2.2rem;font-weight:500;margin-bottom:10px}
+.section-sub{color:var(--muted);margin-bottom:48px}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.feat{background:var(--paper);padding:32px 28px;border:1px solid rgba(42,33,24,.06)}
+.feat-num{font-family:'Frank Ruhl Libre',serif;font-size:2rem;color:var(--latte);margin-bottom:12px}
+.feat h3{font-size:1.1rem;margin-bottom:8px}
+.feat p{color:var(--muted);font-size:.92rem}
+.menu-wrap{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.menu-img{height:400px;overflow:hidden}
+.menu-img img{width:100%;height:100%;object-fit:cover}
+.menu-list{background:var(--paper);padding:36px;border:1px solid rgba(42,33,24,.06)}
+.menu-row{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-bottom:1px dashed rgba(42,33,24,.12);gap:12px}
+.menu-row:last-child{border:none}
+.menu-row .name{font-weight:600}
+.menu-row .desc{display:block;font-size:.8rem;color:var(--muted);font-weight:400}
+.menu-row .price{color:var(--roast);font-weight:700;font-family:'Frank Ruhl Libre',serif;font-size:1.15rem}
+.cta{background:var(--roast);color:#fff;padding:72px 40px;text-align:center}
+.cta h2{font-family:'Frank Ruhl Libre',serif;font-size:2.2rem;font-weight:500;margin-bottom:12px}
+.cta p{opacity:.85;margin-bottom:24px}
+.cta .btn{background:#fff;color:var(--roast)}
+footer{padding:32px 0;display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem;border-top:1px solid rgba(42,33,24,.08);flex-wrap:wrap;gap:12px}
+footer a{color:var(--muted);text-decoration:none}
+#nexa-demo-nav{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:999;display:flex;gap:4px;flex-wrap:wrap;justify-content:center;max-width:calc(100vw - 24px);background:rgba(42,33,24,.94);backdrop-filter:blur(12px);padding:8px 10px;border-radius:16px;font-size:11px}
+#nexa-demo-nav a{color:#c4a484;text-decoration:none;padding:6px 8px;border-radius:999px}
+#nexa-demo-nav a.active{background:rgba(196,164,132,.25);color:#fff}
+@media(max-width:800px){.hero,.menu-wrap,.features{grid-template-columns:1fr}.hero-img{height:280px;order:-1}nav{display:none}}
+</style>
+</head>
+<body data-demo-niche="cafe" data-demo-niche="cafe">
+<header><div class="container nav">
+  <a href="#" class="logo"><span data-demo="name">Harbor Roast</span></a>
+  <nav><a href="#about">עלינו</a><a href="#menu">תפריט</a><a href="#contact">צור קשר</a></nav>
+  <a href="#contact" class="btn btn-fill">הזמן שולחן</a>
+</div></header>
+<section class="hero container">
+  <div>
+    <div class="hero-tag">בית קפה · מאפים · שקט</div>
+    <h1 data-demo="tagline">Neighborhood coffee, properly done</h1>
+    <p>פולים שנבחרו בקפידה, מאפים מהתנור ואווירה שמזמינה להישאר עוד קצת.</p>
+    <a href="#menu" class="btn btn-fill">לתפריט</a>
+  </div>
+  <div class="hero-img"><img src="/demos/cafe/img/hero.jpg" alt="Harbor Roast" loading="eager"/></div>
+</section>
+<div class="divider container"></div>
+<section id="about">
+  <div class="container center">
+    <h2 class="section-title">למה נורה</h2>
+    <p class="section-sub">שלושה דברים שחשובים לנו</p>
+    <div class="features">
+      <div class="feat"><div class="feat-num">01</div><h3>קפה טרי</h3><p>נטחן במקום, לכל כוס — בלי פשרות על טריות.</p></div>
+      <div class="feat"><div class="feat-num">02</div><h3>מאפים ביתיים</h3><p>קרואסונים ולחמים שנאפים אצלנו כל בוקר.</p></div>
+      <div class="feat"><div class="feat-num">03</div><h3>מקום לעצור</h3><p>שקט, Wi‑Fi ושולחנות נוחים לעבודה או מנוחה.</p></div>
+    </div>
+  </div>
+</section>
+<section id="menu">
+  <div class="container">
+    <div class="menu-wrap">
+      <div class="menu-img"><img src="/demos/cafe/img/coffee.jpg" alt="קפה" loading="lazy"/></div>
+      <div>
+        <h2 class="section-title" style="text-align:right">התפריט</h2>
+        <p class="section-sub" style="text-align:right;margin-bottom:24px">המומלצים שלנו</p>
+        <div class="menu-list" data-demo-menu>
+          <div class="menu-row"><div><span class="name">אספרסו / קפוצ׳ינו</span><span class="desc">סינגל או דאבל</span></div><span class="price">₪14</span></div>
+          <div class="menu-row"><div><span class="name">לאטה שקדים</span><span class="desc">חלב שקדים · וניל</span></div><span class="price">₪18</span></div>
+          <div class="menu-row"><div><span class="name">קרואסון חמאה</span><span class="desc">טרי מהתנור</span></div><span class="price">₪14</span></div>
+          <div class="menu-row"><div><span class="name">סנדביץ׳ אבוקדו</span><span class="desc">לחם מחמצת</span></div><span class="price">₪32</span></div>
+          <div class="menu-row"><div><span class="name">עוגת גבינה</span><span class="desc">מתכון ביתי</span></div><span class="price">₪28</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="contact"><div class="container"><div class="cta">
+  <h2>בואו לשבת איתנו</h2>
+  <p><span data-demo="address">214 Pine Street, Seattle, WA 98101</span> · <span data-demo="hours">Mon–Sun 7:00 AM – 8:00 PM</span></p>
+  <a href="https://wa.me/972500000000" class="btn" target="_blank">וואטסאפ</a>
+</div></div></section>
+<footer class="container"><span>© 2026 Harbor Roast · דמו NexaSites</span><a href="/">NexaSites</a> · <a href="/demos/cafe/admin/" style="opacity:.7">Admin</a></footer>
+<div id="nexa-demo-nav">
+  <a href="/">NexaSites</a>
+  <a href="/demos/cafe/" class="active">קפה</a>
+  <a href="/demos/fitness/">כושר</a>
+  <a href="/demos/studio/">Studio</a>
+  <a href="/demos/realty/">נדל״ן</a>
+  <a href="/demos/beauty/">יופי</a>
+  <a href="/demos/lawyer/">עו״ד</a>
+  <a href="/demos/">הכל</a>
+</div>
+
+<script src="/js/countries.js"></script>
+<script src="/js/geo.js"></script>
+<script src="/js/country-selector.js"></script>
+<script src="/js/demo-intl.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NexaSites Admin — פאנל ניהול</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #070b14;
+  --sidebar: #0c1220;
+  --card: #111827;
+  --line: rgba(56,189,248,.1);
+  --text: #e8eef7;
+  --muted: #94a3b8;
+  --cyan: #22d3ee;
+  --cyan2: #38bdf8;
+  --green: #34d399;
+  --amber: #fbbf24;
+  --pink: #f472b6;
+  --radius: 16px;
+  --font: 'Heebo', system-ui, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font); background: var(--bg); color: var(--text);
+  min-height: 100vh; display: flex; -webkit-font-smoothing: antialiased;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px; background: var(--sidebar); border-left: 1px solid var(--line);
+  display: flex; flex-direction: column; padding: 24px 16px; position: fixed;
+  top: 0; right: 0; bottom: 0; z-index: 40;
+}
+.brand {
+  display: flex; align-items: center; gap: 10px; padding: 0 8px 28px;
+  border-bottom: 1px solid var(--line); margin-bottom: 20px;
+}
+.brand-mark {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: linear-gradient(135deg, #38bdf8, #22d3ee); color: #0a1628;
+  font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 20px rgba(34,211,238,.35);
+}
+.brand-text { font-weight: 700; letter-spacing: .08em; font-size: .9rem; }
+.brand-text span {
+  display: block; font-size: .7rem; font-weight: 500; color: var(--muted);
+  letter-spacing: 0; margin-top: 2px;
+}
+.nav-label {
+  font-size: .68rem; font-weight: 600; color: var(--muted); letter-spacing: .08em;
+  text-transform: uppercase; padding: 8px 12px 6px;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 10px; padding: 11px 12px; border-radius: 12px;
+  color: var(--muted); text-decoration: none; font-size: .9rem; font-weight: 500;
+  cursor: pointer; border: none; background: transparent; width: 100%;
+  font-family: inherit; transition: all .2s; text-align: right;
+}
+.nav-item:hover { background: rgba(34,211,238,.06); color: var(--text); }
+.nav-item.active {
+  background: rgba(34,211,238,.12); color: var(--cyan);
+  box-shadow: inset 3px 0 0 var(--cyan);
+}
+.nav-item .ico { width: 20px; text-align: center; font-size: 1rem; }
+.sidebar-foot {
+  margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line);
+}
+.user-chip {
+  display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px;
+  background: rgba(255,255,255,.03);
+}
+.user-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1, #22d3ee);
+  display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem;
+}
+.user-chip strong { display: block; font-size: .85rem; }
+.user-chip span { font-size: .72rem; color: var(--muted); }
+
+/* Main */
+.main {
+  flex: 1; margin-right: 260px; padding: 28px 32px 48px; min-width: 0;
+}
+.topbar {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; gap: 16px; flex-wrap: wrap;
+}
+.topbar h1 { font-size: 1.5rem; font-weight: 800; letter-spacing: -.02em; }
+.topbar p { color: var(--muted); font-size: .9rem; margin-top: 4px; }
+.badge-demo {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(251,191,36,.12); color: var(--amber);
+  border: 1px solid rgba(251,191,36,.25); padding: 6px 12px; border-radius: 999px;
+  font-size: .75rem; font-weight: 600;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; border-radius: 999px;
+  font-weight: 600; font-size: .88rem; border: none; cursor: pointer; font-family: inherit;
+  text-decoration: none; transition: all .25s;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #0ea5e9, #22d3ee); color: #0a1628;
+  box-shadow: 0 0 24px rgba(34,211,238,.3);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 0 32px rgba(34,211,238,.45); }
+.btn-ghost {
+  background: transparent; color: var(--text); border: 1px solid var(--line);
+}
+.btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+
+.panel { display: none; }
+.panel.active { display: block; }
+
+.stats {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 20px 18px; position: relative; overflow: hidden;
+}
+.stat-card::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent); opacity: .5;
+}
+.stat-card .label { font-size: .78rem; color: var(--muted); margin-bottom: 8px; }
+.stat-card .value { font-size: 1.65rem; font-weight: 800; letter-spacing: -.03em; }
+.stat-card .delta { font-size: .75rem; margin-top: 6px; color: var(--green); }
+
+.grid-2 { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; margin-bottom: 16px; }
+.card {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px;
+}
+.card h2 { font-size: 1rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
+.card h2 span { font-size: .75rem; font-weight: 500; color: var(--muted); }
+
+/* Chart fake */
+.chart {
+  height: 180px; display: flex; align-items: flex-end; gap: 8px; padding-top: 12px;
+}
+.chart-bar {
+  flex: 1; background: linear-gradient(180deg, rgba(34,211,238,.7), rgba(34,211,238,.15));
+  border-radius: 6px 6px 2px 2px; min-height: 12px; position: relative;
+  transition: filter .2s;
+}
+.chart-bar:hover { filter: brightness(1.2); }
+.chart-bar span {
+  position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+  font-size: .65rem; color: var(--muted); white-space: nowrap;
+}
+
+.site-list { list-style: none; }
+.site-list li {
+  display: flex; align-items: center; gap: 12px; padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.site-list li:last-child { border: none; }
+.site-thumb {
+  width: 48px; height: 36px; border-radius: 8px; object-fit: cover;
+  background: #1e293b; border: 1px solid var(--line);
+}
+.site-list strong { display: block; font-size: .9rem; }
+.site-list small { color: var(--muted); font-size: .75rem; }
+.status {
+  margin-right: auto; font-size: .7rem; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+}
+.status.live { background: rgba(52,211,153,.12); color: var(--green); }
+.status.draft { background: rgba(251,191,36,.12); color: var(--amber); }
+
+table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+th {
+  text-align: right; color: var(--muted); font-weight: 600; font-size: .75rem;
+  padding: 10px 12px; border-bottom: 1px solid var(--line);
+}
+td { padding: 12px; border-bottom: 1px solid var(--line); }
+tr:last-child td { border: none; }
+
+.form-row { margin-bottom: 16px; }
+.form-row label { display: block; font-size: .8rem; color: var(--muted); margin-bottom: 6px; font-weight: 500; }
+.form-row input, .form-row textarea, .form-row select {
+  width: 100%; background: rgba(0,0,0,.35); border: 1px solid var(--line);
+  border-radius: 10px; padding: 11px 14px; color: var(--text); font-family: inherit; font-size: .9rem;
+  outline: none; transition: border-color .2s;
+}
+.form-row input:focus, .form-row textarea:focus, .form-row select:focus {
+  border-color: rgba(34,211,238,.45);
+}
+.form-row textarea { min-height: 90px; resize: vertical; }
+
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+  background: #0f172a; border: 1px solid rgba(34,211,238,.3); color: var(--text);
+  padding: 12px 20px; border-radius: 12px; font-size: .88rem; font-weight: 500;
+  box-shadow: 0 12px 40px rgba(0,0,0,.4); opacity: 0; transition: all .35s; z-index: 100;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.login-screen {
+  position: fixed; inset: 0; background: var(--bg); z-index: 50;
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+}
+.login-box {
+  width: 100%; max-width: 400px; background: var(--card); border: 1px solid var(--line);
+  border-radius: 24px; padding: 36px 32px; text-align: center;
+}
+.login-box .brand { justify-content: center; border: none; margin-bottom: 8px; padding-bottom: 0; }
+.login-box h1 { font-size: 1.35rem; margin: 16px 0 8px; }
+.login-box p { color: var(--muted); font-size: .9rem; margin-bottom: 24px; }
+.login-box .btn { width: 100%; justify-content: center; margin-top: 8px; }
+.hint {
+  margin-top: 16px; font-size: .78rem; color: var(--muted);
+  background: rgba(34,211,238,.06); border-radius: 10px; padding: 10px 12px;
+}
+
+@media (max-width: 1000px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .grid-2 { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .sidebar { width: 100%; height: auto; position: relative; border-left: none; border-bottom: 1px solid var(--line); }
+  body { flex-direction: column; }
+  .main { margin-right: 0; padding: 20px 16px; }
+  .sidebar-foot { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Login (demo) -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="brand">
+      <div class="brand-mark">N</div>
+      <div class="brand-text">NEXASITES<span>Admin Demo</span></div>
+    </div>
+    <h1>פאנל ניהול האתר</h1>
+    <p>דמו ללקוחות פוטנציאליים — כך נראה הממשק אחרי הרכישה</p>
+    <div class="form-row" style="text-align:right">
+      <label>אימייל</label>
+      <input type="email" id="loginEmail" value="demo@nexasites.com" readonly/>
+    </div>
+    <div class="form-row" style="text-align:right">
+      <label>סיסמה</label>
+      <input type="password" id="loginPass" value="demo1234" readonly/>
+    </div>
+    <button class="btn btn-primary" onclick="doLogin()">כניסה לדמו</button>
+    <div class="hint">זהו דמו בלבד — אין חיבור אמיתי לשרת. כל הנתונים מדומים.</div>
+    <a href="/" class="btn btn-ghost" style="margin-top:12px;width:100%;justify-content:center">← חזרה לאתר</a>
+  </div>
+</div>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-mark">N</div>
+    <div class="brand-text">NEXASITES<span>Client Panel</span></div>
+  </div>
+  <div class="nav-label">ראשי</div>
+  <button class="nav-item active" data-panel="dash" onclick="showPanel('dash', this)"><span class="ico">📊</span> לוח בקרה</button>
+  <button class="nav-item" data-panel="sites" onclick="showPanel('sites', this)"><span class="ico">🌐</span> האתרים שלי</button>
+  <button class="nav-item" data-panel="content" onclick="showPanel('content', this)"><span class="ico">✏️</span> עריכת תוכן</button>
+  <button class="nav-item" data-panel="leads" onclick="showPanel('leads', this)"><span class="ico">📩</span> פניות</button>
+  <div class="nav-label">הגדרות</div>
+  <button class="nav-item" data-panel="domain" onclick="showPanel('domain', this)"><span class="ico">🔗</span> דומיין</button>
+  <button class="nav-item" data-panel="billing" onclick="showPanel('billing', this)"><span class="ico">💳</span> חיוב וחבילה</button>
+  <button class="nav-item" data-panel="settings" onclick="showPanel('settings', this)"><span class="ico">⚙️</span> הגדרות</button>
+  <div class="sidebar-foot">
+    <div class="user-chip">
+      <div class="user-avatar">ד</div>
+      <div>
+        <strong>דמו לקוח</strong>
+        <span>demo@nexasites.com</span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div>
+      <h1 id="panelTitle">לוח בקרה</h1>
+      <p id="panelSub">סקירה כללית של האתר שלך</p>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <span class="badge-demo">● מצב דמו</span>
+      <a href="/" class="btn btn-ghost">האתר הציבורי</a>
+      <button class="btn btn-primary" onclick="toast('בקשה נשלחה (דמו)')">בקש שינוי</button>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="panel active" id="panel-dash">
+    <div class="stats">
+      <div class="stat-card"><div class="label">צפיות השבוע</div><div class="value">2,847</div><div class="delta">↑ 12% מהשבוע שעבר</div></div>
+      <div class="stat-card"><div class="label">פניות חדשות</div><div class="value">18</div><div class="delta">↑ 4 מהשבוע שעבר</div></div>
+      <div class="stat-card"><div class="label">זמן טעינה</div><div class="value">0.9s</div><div class="delta" style="color:var(--green)">מצוין</div></div>
+      <div class="stat-card"><div class="label">ימי חבילה שנותרו</div><div class="value">287</div><div class="delta" style="color:var(--muted)">עד חידוש</div></div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <h2>תנועה · 7 ימים <span>צפיות</span></h2>
+        <div class="chart" id="chart"></div>
+      </div>
+      <div class="card">
+        <h2>האתרים שלך <span>2 פעילים</span></h2>
+        <ul class="site-list">
+          <li>
+            <img class="site-thumb" src="/demos/cafe/img/hero.jpg" alt=""/>
+            <div><strong>קפה נורה</strong><small>nura-cafe.demo · חבילת Professional</small></div>
+            <span class="status live">Live</span>
+          </li>
+          <li>
+            <img class="site-thumb" src="/demos/fitness/img/hero.jpg" alt=""/>
+            <div><strong>FitPeak</strong><small>fitpeak.demo · חבילת Starter</small></div>
+            <span class="status live">Live</span>
+          </li>
+          <li>
+            <img class="site-thumb" src="/demos/studio/img/hero.jpg" alt=""/>
+            <div><strong>Lumen Studio</strong><small>טיוטה</small></div>
+            <span class="status draft">Draft</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <h2>פעילות אחרונה</h2>
+      <table>
+        <thead><tr><th>תאריך</th><th>פעולה</th><th>סטטוס</th></tr></thead>
+        <tbody>
+          <tr><td>24.09.2026</td><td>עדכון טקסט בדף הבית — קפה נורה</td><td style="color:var(--green)">הושלם</td></tr>
+          <tr><td>22.09.2026</td><td>חיבור דומיין fitpeak.demo</td><td style="color:var(--green)">הושלם</td></tr>
+          <tr><td>20.09.2026</td><td>בקשת שינוי תפריט</td><td style="color:var(--amber)">בטיפול</td></tr>
+          <tr><td>18.09.2026</td><td>העלאה לאוויר — קפה נורה</td><td style="color:var(--green)">הושלם</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Sites -->
+  <div class="panel" id="panel-sites">
+    <div class="card" style="margin-bottom:16px">
+      <h2>האתרים שלך <button class="btn btn-primary" style="padding:8px 14px;font-size:.8rem" onclick="toast('בדמו — פתיחת אתר חדש דרך NexaSites')">+ אתר חדש</button></h2>
+      <table>
+        <thead><tr><th>אתר</th><th>חבילה</th><th>דומיין</th><th>סטטוס</th><th></th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>קפה נורה</strong></td>
+            <td>Professional · ₪1,500</td>
+            <td>nura-cafe.demo</td>
+            <td><span class="status live">Live</span></td>
+            <td><a href="/demos/cafe/" class="btn btn-ghost" style="padding:6px 12px;font-size:.78rem" target="_blank">צפייה</a></td>
+          </tr>
+          <tr>
+            <td><strong>FitPeak</strong></td>
+            <td>Starter · ₪1,000</td>
+            <td>fitpeak.demo</td>
+            <td><span class="status live">Live</span></td>
+            <td><a href="/demos/fitness/" class="btn btn-ghost" style="padding:6px 12px;font-size:.78rem" target="_blank">צפייה</a></td>
+          </tr>
+          <tr>
+            <td><strong>Lumen Studio</strong></td>
+            <td>Premium · ₪2,000</td>
+            <td>—</td>
+            <td><span class="status draft">Draft</span></td>
+            <td><a href="/demos/studio/" class="btn btn-ghost" style="padding:6px 12px;font-size:.78rem" target="_blank">צפייה</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="panel" id="panel-content">
+    <div class="card">
+      <h2>עריכת תוכן מהירה <span>דמו — השינויים לא נשמרים בשרת</span></h2>
+      <div class="form-row">
+        <label>בחר אתר</label>
+        <select id="editSite">
+          <option>קפה נורה</option>
+          <option>FitPeak</option>
+          <option>Lumen Studio</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>כותרת ראשית</label>
+        <input type="text" id="editTitle" value="הקפה השכונתי שמרגיש כמו בית"/>
+      </div>
+      <div class="form-row">
+        <label>תיאור קצר</label>
+        <textarea id="editDesc">פולי קפה שנטחנים במקום, מאפים טריים כל בוקר, ואווירה שגורמת לרצות להישאר עוד קצת.</textarea>
+      </div>
+      <div class="form-row">
+        <label>טלפון / וואטסאפ</label>
+        <input type="text" value="050-000-0000"/>
+      </div>
+      <button class="btn btn-primary" onclick="toast('השינויים נשמרו בדמו ✓')">שמירת שינויים</button>
+    </div>
+  </div>
+
+  <!-- Leads -->
+  <div class="panel" id="panel-leads">
+    <div class="card">
+      <h2>פניות מהאתר</h2>
+      <table>
+        <thead><tr><th>שם</th><th>טלפון</th><th>הודעה</th><th>תאריך</th></tr></thead>
+        <tbody>
+          <tr><td>יוסי כ.</td><td>052-1234567</td><td>מעוניין בהזמנת שולחן לשישי</td><td>25.09</td></tr>
+          <tr><td>מיכל ר.</td><td>054-9876543</td><td>שאלה על תפריט טבעוני</td><td>24.09</td></tr>
+          <tr><td>איתי ל.</td><td>050-5551234</td><td>בקשה לאימון ניסיון</td><td>23.09</td></tr>
+          <tr><td>נועה ש.</td><td>053-2223344</td><td>מחפשת דירה בהרצליה</td><td>22.09</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Domain -->
+  <div class="panel" id="panel-domain">
+    <div class="card">
+      <h2>דומיינים</h2>
+      <table>
+        <thead><tr><th>דומיין</th><th>משויך ל</th><th>תוקף</th><th>SSL</th></tr></thead>
+        <tbody>
+          <tr><td>nura-cafe.demo</td><td>קפה נורה</td><td>09.2027</td><td style="color:var(--green)">פעיל</td></tr>
+          <tr><td>fitpeak.demo</td><td>FitPeak</td><td>09.2027</td><td style="color:var(--green)">פעיל</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:16px;color:var(--muted);font-size:.85rem">בדמו — דומיין אמיתי נרשם ומחובר על ידי NexaSites כחלק מהחבילה.</p>
+    </div>
+  </div>
+
+  <!-- Billing -->
+  <div class="panel" id="panel-billing">
+    <div class="stats" style="grid-template-columns:repeat(3,1fr)">
+      <div class="stat-card"><div class="label">חבילה נוכחית</div><div class="value" style="font-size:1.2rem">Professional</div><div class="delta">₪1,500 / שנה</div></div>
+      <div class="stat-card"><div class="label">חידוש הבא</div><div class="value" style="font-size:1.2rem">09.2027</div><div class="delta">אוטומטי</div></div>
+      <div class="stat-card"><div class="label">סה״כ שולם</div><div class="value" style="font-size:1.2rem">₪2,500</div><div class="delta">2 חבילות</div></div>
+    </div>
+    <div class="card">
+      <h2>היסטוריית חיובים</h2>
+      <table>
+        <thead><tr><th>תאריך</th><th>תיאור</th><th>סכום</th><th>סטטוס</th></tr></thead>
+        <tbody>
+          <tr><td>12.09.2026</td><td>Professional — קפה נורה</td><td>₪1,500</td><td style="color:var(--green)">שולם</td></tr>
+          <tr><td>05.09.2026</td><td>Starter — FitPeak</td><td>₪1,000</td><td style="color:var(--green)">שולם</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Settings -->
+  <div class="panel" id="panel-settings">
+    <div class="card">
+      <h2>הגדרות חשבון</h2>
+      <div class="form-row"><label>שם מלא</label><input type="text" value="דמו לקוח"/></div>
+      <div class="form-row"><label>אימייל</label><input type="email" value="demo@nexasites.com"/></div>
+      <div class="form-row"><label>טלפון</label><input type="text" value="050-000-0000"/></div>
+      <div class="form-row"><label>שפת ממשק</label>
+        <select><option>עברית</option><option>English</option><option>العربية</option><option>Русский</option></select>
+      </div>
+      <button class="btn btn-primary" onclick="toast('הגדרות נשמרו (דמו)')">שמירה</button>
+      <button class="btn btn-ghost" style="margin-right:8px" onclick="doLogout()">התנתקות</button>
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const titles = {
+  dash: ['לוח בקרה', 'סקירה כללית של האתר שלך'],
+  sites: ['האתרים שלי', 'ניהול כל האתרים בחבילה'],
+  content: ['עריכת תוכן', 'שינויי טקסט מהירים — בדמו בלבד'],
+  leads: ['פניות', 'הודעות שהגיעו מהטפסים באתר'],
+  domain: ['דומיין', 'דומיינים מחוברים ו־SSL'],
+  billing: ['חיוב וחבילה', 'חבילות, חידושים ותשלומים'],
+  settings: ['הגדרות', 'פרטי חשבון והעדפות']
+};
+
+function showPanel(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const t = titles[id] || ['', ''];
+  document.getElementById('panelTitle').textContent = t[0];
+  document.getElementById('panelSub').textContent = t[1];
+}
+
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2400);
+}
+
+function doLogin() {
+  document.getElementById('loginScreen').style.display = 'none';
+  try { sessionStorage.setItem('nexa_admin_demo', '1'); } catch(e) {}
+}
+
+function doLogout() {
+  try { sessionStorage.removeItem('nexa_admin_demo'); } catch(e) {}
+  document.getElementById('loginScreen').style.display = 'flex';
+}
+
+// Chart bars
+(function() {
+  const data = [40, 65, 45, 80, 70, 95, 88];
+  const days = ['ו׳', 'ש׳', 'א׳', 'ב׳', 'ג׳', 'ד׳', 'ה׳'];
+  const chart = document.getElementById('chart');
+  if (!chart) return;
+  data.forEach((v, i) => {
+    const b = document.createElement('div');
+    b.className = 'chart-bar';
+    b.style.height = v + '%';
+    b.innerHTML = '<span>' + days[i] + '</span>';
+    chart.appendChild(b);
+  });
+})();
+
+// Auto-login if already in session
+try {
+  if (sessionStorage.getItem('nexa_admin_demo') === '1') {
+    document.getElementById('loginScreen').style.display = 'none';
+  }
+} catch(e) {}
+</script>
+</body>
+</html>

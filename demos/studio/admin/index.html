@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Admin — Lumen</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0b0f17;--sidebar:#0f1419;--card:#151b24;--ink:#e8eef7;--muted:#8b9bb4;
+  --line:rgba(255,255,255,.07);--accent:#1a1916;--accent2:#a8a29e;
+  --ok:#22c55e;--warn:#f59e0b;--danger:#ef4444;--radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Heebo,system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.5}
+button,input,select,textarea{font-family:inherit}
+a{color:inherit}
+
+/* Login */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:
+  radial-gradient(ellipse at 30% 20%,color-mix(in srgb,var(--accent) 18%,transparent),transparent 50%),var(--bg)}
+.login-card{width:100%;max-width:400px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:36px 32px;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.login-card h1{font-size:1.4rem;font-weight:800;margin-bottom:6px}
+.login-card p{color:var(--muted);font-size:.9rem;margin-bottom:28px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:.8rem;color:var(--muted);margin-bottom:6px;font-weight:500}
+.field input,.field select,.field textarea{
+  width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;
+  padding:12px 14px;color:var(--ink);font-size:.95rem;outline:none;transition:border .2s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}
+.field textarea{min-height:90px;resize:vertical}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 18px;border-radius:10px;
+  font-weight:600;font-size:.9rem;border:none;cursor:pointer;transition:.2s;text-decoration:none}
+.btn-primary{background:var(--accent);color:#fff;width:100%}
+.btn-primary:hover{filter:brightness(1.08)}
+.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn-danger{background:rgba(239,68,68,.15);color:var(--danger);border:1px solid rgba(239,68,68,.25)}
+.btn-sm{padding:7px 12px;font-size:.8rem;border-radius:8px}
+.hint{font-size:.78rem;color:var(--muted);margin-top:14px;text-align:center}
+.error{background:rgba(239,68,68,.12);color:#fca5a5;padding:10px 12px;border-radius:8px;font-size:.85rem;margin-bottom:14px;display:none}
+
+/* Layout */
+.app{display:none;min-height:100vh}
+.app.show{display:flex}
+.sidebar{width:240px;background:var(--sidebar);border-left:1px solid var(--line);padding:20px 14px;display:flex;flex-direction:column;position:fixed;top:0;right:0;bottom:0;z-index:40}
+.sidebar-brand{padding:8px 12px 24px;font-weight:800;font-size:1.05rem;display:flex;align-items:center;gap:10px}
+.sidebar-brand span{width:32px;height:32px;border-radius:9px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:.9rem;color:#fff}
+.nav-item{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;color:var(--muted);text-decoration:none;font-weight:500;font-size:.9rem;cursor:pointer;border:none;background:none;width:100%;text-align:right;transition:.15s}
+.nav-item:hover,.nav-item.active{background:rgba(255,255,255,.05);color:var(--ink)}
+.nav-item.active{background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent2)}
+.nav-item .ic{display:inline-flex;align-items:center;justify-content:center;}.nav-item .ic svg,.sidebar-brand span svg{display:block;}.nav-item .ic{width:20px;text-align:center;opacity:.8}
+.sidebar-foot{margin-top:auto;padding:12px;border-top:1px solid var(--line)}
+.main{margin-right:240px;flex:1;padding:24px 28px 60px;width:calc(100% - 240px)}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;gap:16px;flex-wrap:wrap}
+.topbar h1{font-size:1.45rem;font-weight:800}
+.topbar .sub{color:var(--muted);font-size:.88rem}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 18px}
+.stat .label{font-size:.78rem;color:var(--muted);margin-bottom:6px}
+.stat .val{font-size:1.7rem;font-weight:800;letter-spacing:-.02em}
+.stat .delta{font-size:.75rem;margin-top:4px;color:var(--ok)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin-bottom:20px}
+.panel h2{font-size:1.05rem;font-weight:700;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{padding:11px 12px;text-align:right;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;font-size:.75rem;text-transform:uppercase;letter-spacing:.04em}
+tr:hover td{background:rgba(255,255,255,.02)}
+.badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:.72rem;font-weight:600}
+.badge-ok{background:rgba(34,197,94,.15);color:#4ade80}
+.badge-warn{background:rgba(245,158,11,.15);color:#fbbf24}
+.badge-new{background:rgba(56,189,248,.15);color:#38bdf8}
+.tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
+.tab{padding:8px 14px;border-radius:8px;background:transparent;border:1px solid var(--line);color:var(--muted);cursor:pointer;font-weight:500;font-size:.85rem}
+.tab.active{background:color-mix(in srgb,var(--accent) 18%,transparent);border-color:var(--accent);color:var(--accent2)}
+.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.media-item{aspect-ratio:1;border-radius:12px;overflow:hidden;border:1px solid var(--line);position:relative;background:var(--bg)}
+.media-item img{width:100%;height:100%;object-fit:cover}
+.media-item .actions{position:absolute;inset:auto 6px 6px;display:flex;gap:4px;opacity:0;transition:.2s}
+.media-item:hover .actions{opacity:1}
+.upload-zone{border:2px dashed var(--line);border-radius:14px;padding:36px;text-align:center;color:var(--muted);cursor:pointer;transition:.2s;margin-bottom:16px}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--accent);color:var(--accent2);background:color-mix(in srgb,var(--accent) 6%,transparent)}
+.upload-zone input{display:none}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card);border:1px solid var(--line);
+  padding:12px 20px;border-radius:12px;font-size:.88rem;font-weight:500;z-index:100;transition:.3s;opacity:0;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.view{display:none}
+.view.active{display:block}
+.mobile-toggle{display:none;position:fixed;top:14px;right:14px;z-index:50;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink);cursor:pointer}
+@media(max-width:900px){
+  .sidebar{transform:translateX(110%);transition:.3s}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-right:0;width:100%;padding:20px 16px 80px}
+  .grid-4{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  .mobile-toggle{display:block}
+}
+@media(max-width:500px){.grid-4{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<!-- LOGIN -->
+<div class="login-wrap" id="loginScreen">
+  <div class="login-card">
+    <h1>Lumen Admin</h1>
+    <p>התחברות לניהול האתר</p>
+    <div class="error" id="loginError">סיסמה שגויה. נסו: admin123</div>
+    <div class="field"><label>אימייל</label><input type="email" id="loginEmail" value="admin@lumen.com" /></div>
+    <div class="field"><label>סיסמה</label><input type="password" id="loginPass" placeholder="admin123" /></div>
+    <button class="btn btn-primary" id="loginBtn">כניסה</button>
+    <p class="hint">דמו · סיסמה: <strong>admin123</strong></p>
+  </div>
+</div>
+
+<button class="mobile-toggle" id="menuBtn" type="button"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+
+<div class="app" id="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3l1.8 5.5L19.5 10l-5.5 1.8L12 17.5l-1.8-5.7L4.5 10l5.5-1.5L12 3z"/></svg></span> Lumen</div>
+    <button class="nav-item active" data-view="dashboard"><span class="ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span> דשבורד</button>
+    <button class="nav-item" data-view="content"><span class="ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg></span> תוכן האתר</button>
+    <button class="nav-item" data-view="media"><span class="ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg></span> מדיה ותמונות</button>
+    <button class="nav-item" data-view="clients"><span class="ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> Clients</button>
+    <button class="nav-item" data-view="projects"><span class="ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg></span> Projects</button>
+    <button class="nav-item" data-view="settings"><span class="ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg></span> הגדרות</button>
+    <div class="sidebar-foot">
+      <a class="nav-item" href="/demos/studio/" target="_blank"><span class="ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span> צפייה באתר</a>
+      <button class="nav-item" id="logoutBtn"><span class="ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 14L4 9l5-5M4 9h11a4 4 0 0 1 0 8h-1"/></svg></span> התנתקות</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- DASHBOARD -->
+    <div class="view active" id="view-dashboard">
+      <div class="topbar"><div><h1>דשבורד</h1><div class="sub">סקירה כללית · Lumen</div></div>
+        <button class="btn btn-ghost btn-sm" onclick="seedDemo()">איפוס נתוני דמו</button></div>
+      <div class="grid-4" id="statCards"></div>
+      <div class="panel">
+        <h2>פעילות אחרונה</h2>
+        <div class="table-wrap"><table><thead><tr><th>זמן</th><th>פעולה</th><th>פרטים</th></tr></thead>
+        <tbody id="activityBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="view" id="view-content">
+      <div class="topbar"><div><h1>תוכן האתר</h1><div class="sub">עריכת טקסטים וסקשנים</div></div>
+        <button class="btn btn-primary btn-sm" id="saveContent"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg> שמירה</button></div>
+      <div class="panel" id="contentFields"></div>
+    </div>
+
+    <!-- MEDIA -->
+    <div class="view" id="view-media">
+      <div class="topbar"><div><h1>מדיה ותמונות</h1><div class="sub">העלאה וניהול קבצים</div></div></div>
+      <div class="panel">
+        <div class="upload-zone" id="uploadZone">
+          <div style="font-size:2rem;margin-bottom:8px"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg></div>
+          <div>גררו תמונות לכאן או לחצו לבחירה</div>
+          <div style="font-size:.78rem;margin-top:6px">JPG, PNG, WebP · עד 5MB לדמו</div>
+          <input type="file" id="fileInput" accept="image/*" multiple/>
+        </div>
+        <div class="media-grid" id="mediaGrid"></div>
+      </div>
+    </div>
+
+    <!-- CLIENTS -->
+    <div class="view" id="view-clients">
+      <div class="topbar"><div><h1>Clients</h1><div class="sub">ניהול רשימה ומעקב</div></div>
+        <button class="btn btn-primary btn-sm" id="addClientBtn">+ הוספה</button></div>
+      <div class="panel">
+        <div class="table-wrap"><table>
+          <thead><tr><th>שם</th><th>טלפון / אימייל</th><th>סטטוס</th><th>הערות</th><th></th></tr></thead>
+          <tbody id="clientsBody"></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- EXTRA -->
+    <div class="view" id="view-projects">
+      <div class="topbar"><div><h1>Projects</h1><div class="sub">Portfolio items</div></div>
+        <button class="btn btn-primary btn-sm" id="addExtraBtn">+ הוספה</button></div>
+      <div class="panel">
+        <div class="table-wrap"><table>
+          <thead><tr id="extraHead"></tr></thead>
+          <tbody id="extraBody"></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="view" id="view-settings">
+      <div class="topbar"><div><h1>הגדרות</h1><div class="sub">פרטי העסק והאתר</div></div>
+        <button class="btn btn-primary btn-sm" id="saveSettings"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg> שמירה</button></div>
+      <div class="panel">
+        <div class="form-row">
+          <div class="field"><label>שם העסק</label><input id="setName"/></div>
+          <div class="field"><label>טלפון</label><input id="setPhone"/></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>אימייל</label><input id="setEmail"/></div>
+          <div class="field"><label>כתובת / עיר</label><input id="setAddress"/></div>
+        </div>
+        <div class="field"><label>קישור וואטסאפ</label><input id="setWhatsapp"/></div>
+        <div class="field"><label>שעות פעילות</label><input id="setHours"/></div>
+        <div class="field"><label>הודעת תודה (אחרי פנייה)</label><textarea id="setThanks"></textarea></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const CONFIG = {
+  slug: "lumen",
+  contentFields: [{"key": "hero_title", "label": "Hero title", "type": "text"}, {"key": "hero_sub", "label": "Subtitle", "type": "textarea"}, {"key": "cta", "label": "CTA text", "type": "text"}],
+  defaultContent: {"hero_title": "Design that feels inevitable", "hero_sub": "Brand identity and digital products.", "cta": "Start a project"},
+  defaultClients: [{"name": "Northwind", "contact": "hello@northwind.io", "status": "בטיפול", "note": "Brand identity"}, {"name": "Pulse", "contact": "team@pulse.app", "status": "חדש", "note": "App redesign"}],
+  defaultExtras: [{"name": "Northwind", "price": "2025", "cat": "Branding"}, {"name": "Pulse App", "price": "2025", "cat": "Product"}, {"name": "Atelier", "price": "2024", "cat": "Packaging"}],
+  extraColumns: ["Project", "Year", "Type"],
+  extraKeys: ["name", "price", "cat"],
+  defaultSettings: {"name": "Lumen Studio", "phone": "+1 555 0100", "email": "hello@lumen.studio", "address": "Remote / NYC", "whatsapp": "", "hours": "Mon–Fri", "thanks": "Thanks — we'll reply within a day."},
+  stats: (d) => [
+    {label:'Active projects',val:String((d.extras||[]).length||3),delta:''},
+    {label:'Clients',val:String((d.clients||[]).length),delta:''},
+    {label:'Portfolio',val:String((d.extras||[]).length),delta:''},
+    {label:'Media',val:String((d.media||[]).length),delta:''}
+  ]
+};
+const KEY = 'nexa_admin_' + CONFIG.slug;
+
+function load() {
+  try { return JSON.parse(localStorage.getItem(KEY)) || null; } catch(e){ return null; }
+}
+function save(data) {
+  localStorage.setItem(KEY, JSON.stringify(data));
+}
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function defaultData() {
+  return {
+    content: Object.assign({}, CONFIG.defaultContent),
+    media: [],
+    clients: CONFIG.defaultClients.slice(),
+    extras: CONFIG.defaultExtras.slice(),
+    settings: Object.assign({}, CONFIG.defaultSettings),
+    activity: [
+      { t: 'היום 09:12', a: 'כניסת מערכת', d: 'Admin' },
+      { t: 'אתמול 18:40', a: 'ליד חדש', d: CONFIG.defaultClients[0] ? CONFIG.defaultClients[0].name : '—' },
+    ]
+  };
+}
+
+let data = load() || defaultData();
+
+function seedDemo() {
+  data = defaultData();
+  save(data);
+  renderAll();
+  toast('נתוני דמו אופסו');
+}
+
+/* Auth */
+const loginScreen = document.getElementById('loginScreen');
+const app = document.getElementById('app');
+if (sessionStorage.getItem(KEY + '_auth') === '1') {
+  loginScreen.style.display = 'none';
+  app.classList.add('show');
+}
+document.getElementById('loginBtn').onclick = () => {
+  const pass = document.getElementById('loginPass').value;
+  if (pass === 'admin123' || pass === 'admin') {
+    sessionStorage.setItem(KEY + '_auth', '1');
+    loginScreen.style.display = 'none';
+    app.classList.add('show');
+    renderAll();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+};
+document.getElementById('loginPass').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('loginBtn').click(); });
+document.getElementById('logoutBtn').onclick = () => {
+  sessionStorage.removeItem(KEY + '_auth');
+  location.reload();
+};
+
+/* Nav */
+document.querySelectorAll('.nav-item[data-view]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item[data-view]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    const v = document.getElementById('view-' + btn.dataset.view);
+    if (v) v.classList.add('active');
+    document.getElementById('sidebar').classList.remove('open');
+  });
+});
+document.getElementById('menuBtn').onclick = () => document.getElementById('sidebar').classList.toggle('open');
+
+/* Dashboard */
+function renderDashboard() {
+  const stats = CONFIG.stats(data);
+  document.getElementById('statCards').innerHTML = stats.map(s =>
+    `<div class="stat"><div class="label">${s.label}</div><div class="val">${s.val}</div><div class="delta">${s.delta||''}</div></div>`
+  ).join('');
+  document.getElementById('activityBody').innerHTML = (data.activity||[]).map(a =>
+    `<tr><td>${a.t}</td><td>${a.a}</td><td>${a.d}</td></tr>`
+  ).join('');
+}
+
+/* Content */
+function renderContent() {
+  const box = document.getElementById('contentFields');
+  box.innerHTML = CONFIG.contentFields.map(f => {
+    if (f.type === 'textarea') {
+      return `<div class="field"><label>${f.label}</label><textarea data-ckey="${f.key}">${data.content[f.key]||''}</textarea></div>`;
+    }
+    return `<div class="field"><label>${f.label}</label><input data-ckey="${f.key}" value="${(data.content[f.key]||'').replace(/"/g,'&quot;')}"/></div>`;
+  }).join('');
+}
+document.getElementById('saveContent').onclick = () => {
+  document.querySelectorAll('[data-ckey]').forEach(el => { data.content[el.dataset.ckey] = el.value; });
+  data.activity.unshift({ t: 'עכשיו', a: 'עדכון תוכן', d: 'נשמר' });
+  save(data); toast('התוכן נשמר');
+};
+
+/* Media */
+const zone = document.getElementById('uploadZone');
+const fileInput = document.getElementById('fileInput');
+zone.onclick = () => fileInput.click();
+zone.ondragover = e => { e.preventDefault(); zone.classList.add('drag'); };
+zone.ondragleave = () => zone.classList.remove('drag');
+zone.ondrop = e => { e.preventDefault(); zone.classList.remove('drag'); handleFiles(e.dataTransfer.files); };
+fileInput.onchange = () => handleFiles(fileInput.files);
+
+function handleFiles(files) {
+  [...files].forEach(file => {
+    if (!file.type.startsWith('image/')) return;
+    if (file.size > 5 * 1024 * 1024) { toast('קובץ גדול מדי (מקס 5MB בדמו)'); return; }
+    const reader = new FileReader();
+    reader.onload = () => {
+      data.media.unshift({ id: Date.now() + Math.random(), name: file.name, src: reader.result, size: Math.round(file.size/1024) + 'KB' });
+      if (data.media.length > 20) data.media = data.media.slice(0, 20);
+      data.activity.unshift({ t: 'עכשיו', a: 'העלאת תמונה', d: file.name });
+      save(data); renderMedia(); toast('התמונה הועלתה');
+    };
+    reader.readAsDataURL(file);
+  });
+}
+function renderMedia() {
+  const g = document.getElementById('mediaGrid');
+  if (!data.media.length) {
+    g.innerHTML = '<div style="color:var(--muted);grid-column:1/-1;padding:20px;text-align:center">אין תמונות עדיין — העלו למעלה</div>';
+    return;
+  }
+  g.innerHTML = data.media.map(m => `
+    <div class="media-item">
+      <img src="${m.src}" alt="${m.name}"/>
+      <div class="actions">
+        <button class="btn btn-sm btn-ghost" onclick="navigator.clipboard.writeText('${m.name}');toast('שם הקובץ הועתק')"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg></button>
+        <button class="btn btn-sm btn-danger" onclick="delMedia('${m.id}')"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg></button>
+      </div>
+    </div>`).join('');
+}
+window.delMedia = (id) => {
+  data.media = data.media.filter(m => String(m.id) !== String(id));
+  save(data); renderMedia(); toast('נמחק');
+};
+
+/* Clients */
+function renderClients() {
+  document.getElementById('clientsBody').innerHTML = data.clients.map((c, i) => `
+    <tr>
+      <td><strong>${c.name}</strong></td>
+      <td>${c.contact}</td>
+      <td><span class="badge badge-${c.status==='חדש'?'new':c.status==='בטיפול'?'warn':'ok'}">${c.status}</span></td>
+      <td>${c.note||'—'}</td>
+      <td style="white-space:nowrap">
+        <button class="btn btn-sm btn-ghost" onclick="editClient(${i})">עריכה</button>
+        <button class="btn btn-sm btn-danger" onclick="delClient(${i})">מחיקה</button>
+      </td>
+    </tr>`).join('') || '<tr><td colspan="5" style="color:var(--muted)">אין רשומות</td></tr>';
+}
+document.getElementById('addClientBtn').onclick = () => {
+  const name = prompt('שם:');
+  if (!name) return;
+  const contact = prompt('טלפון / אימייל:') || '';
+  data.clients.unshift({ name, contact, status: 'חדש', note: '' });
+  data.activity.unshift({ t: 'עכשיו', a: 'לקוח חדש', d: name });
+  save(data); renderClients(); renderDashboard(); toast('נוסף');
+};
+window.editClient = (i) => {
+  const c = data.clients[i];
+  const name = prompt('שם:', c.name); if (name===null) return;
+  const contact = prompt('טלפון / אימייל:', c.contact); if (contact===null) return;
+  const status = prompt('סטטוס (חדש / בטיפול / הושלם):', c.status) || c.status;
+  const note = prompt('הערות:', c.note||'') || '';
+  data.clients[i] = { name, contact, status, note };
+  save(data); renderClients(); toast('עודכן');
+};
+window.delClient = (i) => {
+  if (!confirm('למחוק?')) return;
+  data.clients.splice(i, 1);
+  save(data); renderClients(); toast('נמחק');
+};
+
+/* Extras */
+function renderExtras() {
+  document.getElementById('extraHead').innerHTML = CONFIG.extraColumns.map(c => `<th>${c}</th>`).join('') + '<th></th>';
+  document.getElementById('extraBody').innerHTML = data.extras.map((row, i) => `
+    <tr>${CONFIG.extraKeys.map(k => `<td>${row[k]||''}</td>`).join('')}
+    <td style="white-space:nowrap">
+      <button class="btn btn-sm btn-ghost" onclick="editExtra(${i})">עריכה</button>
+      <button class="btn btn-sm btn-danger" onclick="delExtra(${i})">מחיקה</button>
+    </td></tr>`).join('') || `<tr><td colspan="${CONFIG.extraColumns.length+1}" style="color:var(--muted)">אין פריטים</td></tr>`;
+}
+document.getElementById('addExtraBtn').onclick = () => {
+  const row = {};
+  CONFIG.extraKeys.forEach((k, idx) => {
+    row[k] = prompt(CONFIG.extraColumns[idx] + ':') || '';
+  });
+  if (!row[CONFIG.extraKeys[0]]) return;
+  data.extras.unshift(row);
+  save(data); renderExtras(); toast('נוסף');
+};
+window.editExtra = (i) => {
+  const row = Object.assign({}, data.extras[i]);
+  CONFIG.extraKeys.forEach((k, idx) => {
+    const v = prompt(CONFIG.extraColumns[idx] + ':', row[k]);
+    if (v !== null) row[k] = v;
+  });
+  data.extras[i] = row;
+  save(data); renderExtras(); toast('עודכן');
+};
+window.delExtra = (i) => {
+  if (!confirm('למחוק?')) return;
+  data.extras.splice(i, 1);
+  save(data); renderExtras(); toast('נמחק');
+};
+
+/* Settings */
+function renderSettings() {
+  const s = data.settings;
+  document.getElementById('setName').value = s.name || '';
+  document.getElementById('setPhone').value = s.phone || '';
+  document.getElementById('setEmail').value = s.email || '';
+  document.getElementById('setAddress').value = s.address || '';
+  document.getElementById('setWhatsapp').value = s.whatsapp || '';
+  document.getElementById('setHours').value = s.hours || '';
+  document.getElementById('setThanks').value = s.thanks || '';
+}
+document.getElementById('saveSettings').onclick = () => {
+  data.settings = {
+    name: document.getElementById('setName').value,
+    phone: document.getElementById('setPhone').value,
+    email: document.getElementById('setEmail').value,
+    address: document.getElementById('setAddress').value,
+    whatsapp: document.getElementById('setWhatsapp').value,
+    hours: document.getElementById('setHours').value,
+    thanks: document.getElementById('setThanks').value,
+  };
+  data.activity.unshift({ t: 'עכשיו', a: 'עדכון הגדרות', d: data.settings.name });
+  save(data); toast('ההגדרות נשמרו');
+};
+
+function renderAll() {
+  renderDashboard(); renderContent(); renderMedia(); renderClients(); renderExtras(); renderSettings();
+}
+if (app.classList.contains('show')) renderAll();
+</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>FitPeak — אימון אישי</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#050505;--card:#111;--ink:#f5f5f5;--muted:#888;--lime:#c8ff00;--line:rgba(255,255,255,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Heebo,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;padding-bottom:70px}
+.container{max-width:1100px;margin:0 auto;padding:0 22px}
+header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(5,5,5,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{font-weight:900;font-size:1.4rem;text-decoration:none;color:#fff;letter-spacing:-.04em}
+.logo span{color:var(--lime)}
+nav{display:flex;gap:24px}
+nav a{color:var(--muted);text-decoration:none;font-weight:600;font-size:.88rem;text-transform:uppercase;letter-spacing:.04em}
+nav a:hover{color:var(--lime)}
+.btn{display:inline-flex;padding:14px 28px;font-weight:800;font-size:.9rem;text-decoration:none;border:none;cursor:pointer;font-family:inherit;transition:.25s;text-transform:uppercase;letter-spacing:.04em}
+.btn-lime{background:var(--lime);color:#000}
+.btn-lime:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(200,255,0,.4)}
+.btn-ghost{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.2)}
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;padding:100px 0 60px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:.35;filter:grayscale(40%) contrast(1.1)}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,#050505 0%,transparent 40%,#050505 95%)}
+.hero .container{position:relative;z-index:1}
+.hero h1{font-size:clamp(3rem,10vw,5.5rem);font-weight:900;line-height:.95;letter-spacing:-.04em;margin-bottom:20px;text-transform:uppercase}
+.hero h1 span{color:var(--lime);display:block}
+.hero p{color:var(--muted);font-size:1.1rem;max-width:420px;margin-bottom:32px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.stats{display:flex;gap:40px;margin-top:56px;flex-wrap:wrap}
+.stat strong{display:block;font-size:2.4rem;font-weight:900;color:var(--lime);letter-spacing:-.03em}
+.stat span{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+section{padding:90px 0}
+.section-tag{font-size:.75rem;font-weight:800;color:var(--lime);letter-spacing:.15em;text-transform:uppercase;margin-bottom:10px}
+.section-title{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;letter-spacing:-.03em;margin-bottom:48px;text-transform:uppercase;line-height:1.1}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.step{background:var(--card);border:1px solid var(--line);padding:32px 24px;transition:.3s}
+.step:hover{border-color:var(--lime)}
+.step-n{font-size:3rem;font-weight:900;color:var(--lime);line-height:1;margin-bottom:16px;opacity:.9}
+.step h3{font-size:1.1rem;font-weight:800;margin-bottom:8px;text-transform:uppercase}
+.step p{color:var(--muted);font-size:.9rem}
+.pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.price-card{background:var(--card);border:1px solid var(--line);padding:36px 24px;display:flex;flex-direction:column}
+.price-card.hot{border-color:var(--lime);position:relative}
+.price-card.hot::before{content:'HOT';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--lime);color:#000;font-size:.7rem;font-weight:900;padding:4px 12px;letter-spacing:.1em}
+.price-card h3{font-size:1rem;font-weight:800;text-transform:uppercase;margin-bottom:8px}
+.price-card .p{font-size:2.8rem;font-weight:900;letter-spacing:-.03em;margin:8px 0}
+.price-card .p span{font-size:.9rem;font-weight:500;color:var(--muted)}
+.price-card ul{list-style:none;flex:1;margin:20px 0 28px}
+.price-card li{padding:10px 0;border-bottom:1px solid var(--line);color:var(--muted);font-size:.9rem}
+.price-card li::before{content:'→ ';color:var(--lime);font-weight:700}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+.split img{width:100%;height:380px;object-fit:cover;filter:grayscale(30%)}
+.cta{text-align:center;border:2px solid var(--lime);padding:64px 32px}
+.cta h2{font-size:2.2rem;font-weight:900;text-transform:uppercase;margin-bottom:12px;letter-spacing:-.02em}
+.cta p{color:var(--muted);margin-bottom:28px}
+footer{padding:28px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:var(--muted);font-size:.8rem;flex-wrap:wrap;gap:10px}
+footer a{color:var(--muted);text-decoration:none}
+#nexa-demo-nav{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:999;display:flex;gap:4px;flex-wrap:wrap;justify-content:center;max-width:calc(100vw - 24px);background:rgba(0,0,0,.95);border:1px solid var(--line);padding:8px 10px;border-radius:4px;font-size:11px}
+#nexa-demo-nav a{color:#888;text-decoration:none;padding:6px 8px;font-weight:600}
+#nexa-demo-nav a.active{color:var(--lime)}
+@media(max-width:800px){.steps,.pricing,.split{grid-template-columns:1fr}nav{display:none}.hero h1{font-size:2.8rem}}
+</style>
+</head>
+<body data-demo-niche="fitness" data-demo-niche="fitness">
+<header><div class="container nav">
+  <a href="#" class="logo">FIT<span>PEAK</span></a>
+  <nav><a href="#how">How</a><a href="#pricing">Plans</a><a href="#contact">Contact</a></nav>
+  <a href="#contact" class="btn btn-lime">Start</a>
+</div></header>
+<section class="hero">
+  <div class="hero-bg"><img src="/demos/fitness/img/hero.jpg" alt=""/></div>
+  <div class="container">
+    <h1>No excuses.<br/><span>Only results.</span></h1>
+    <p>תוכנית אימון אישית, ליווי צמוד ומדידה שבועית — עד שהמטרה מאחוריך.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn btn-lime">שיחת היכרות</a>
+      <a href="#pricing" class="btn btn-ghost">מסלולים</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><strong>200+</strong><span>מתאמנים</span></div>
+      <div class="stat"><strong>8Y</strong><span>ניסיון</span></div>
+      <div class="stat"><strong>4.9</strong><span>דירוג</span></div>
+    </div>
+  </div>
+</section>
+<section id="how"><div class="container">
+  <div class="section-tag">Process</div>
+  <h2 class="section-title">איך זה עובד</h2>
+  <div class="steps">
+    <div class="step"><div class="step-n">01</div><h3>אבחון</h3><p>שיחה + הערכת מצב ומטרות.</p></div>
+    <div class="step"><div class="step-n">02</div><h3>תוכנית</h3><p>אימונים ותזונה מותאמים אליך.</p></div>
+    <div class="step"><div class="step-n">03</div><h3>ליווי</h3><p>מעקב שבועי עד לתוצאה.</p></div>
+  </div>
+</div></section>
+<section id="pricing"><div class="container">
+  <div class="section-tag">Pricing</div>
+  <h2 class="section-title">מסלולים</h2>
+  <div class="pricing">
+    <div class="price-card" data-demo-plan><h3>Basic</h3><div class="p">₪499 <span>/חודש</span></div>
+      <ul><li>תוכנית אימון</li><li>עדכון דו־שבועי</li><li>וואטסאפ</li></ul>
+      <a href="#contact" class="btn btn-ghost" style="width:100%;justify-content:center">בחירה</a>
+    </div>
+    <div class="price-card hot" data-demo-plan><h3>Pro</h3><div class="p">₪799 <span>/חודש</span></div>
+      <ul><li>הכל ב-Basic</li><li>תזונה מלאה</li><li>זום שבועי</li></ul>
+      <a href="#contact" class="btn btn-lime" style="width:100%;justify-content:center">בחירה</a>
+    </div>
+    <div class="price-card"><h3>VIP</h3><div class="p">₪1,200 <span>/חודש</span></div>
+      <ul><li>הכל ב-Pro</li><li>אימון פרונטלי</li><li>זמינות מלאה</li></ul>
+      <a href="#contact" class="btn btn-ghost" style="width:100%;justify-content:center">בחירה</a>
+    </div>
+  </div>
+</div></section>
+<section><div class="container">
+  <div class="split">
+    <img src="/demos/fitness/img/train.jpg" alt="" loading="lazy"/>
+    <div>
+      <div class="section-tag">Mindset</div>
+      <h2 class="section-title" style="margin-bottom:16px">פשוט.<br/>חד.<br/>מדיד.</h2>
+      <p style="color:var(--muted)">בלי הבטחות שווא. תוכנית שמותאמת לגוף וללו״ז שלך — עם מספרים שמראים התקדמות.</p>
+    </div>
+  </div>
+</div></section>
+<section id="contact"><div class="container"><div class="cta">
+  <h2>Ready?</h2>
+  <p>שיחת היכרות קצרה — בלי התחייבות</p>
+  <a href="https://wa.me/972500000000" class="btn btn-lime" target="_blank">וואטסאפ</a>
+</div></div></section>
+<footer class="container"><span>© 2026 FitPeak · NexaSites Demo</span><a href="/">NexaSites</a> · <a href="/demos/fitness/admin/" style="opacity:.7">Admin</a></footer>
+<div id="nexa-demo-nav">
+  <a href="/">NexaSites</a>
+  <a href="/demos/cafe/">קפה</a>
+  <a href="/demos/fitness/" class="active">כושר</a>
+  <a href="/demos/studio/">Studio</a>
+  <a href="/demos/realty/">נדל״ן</a>
+  <a href="/demos/beauty/">יופי</a>
+  <a href="/demos/lawyer/">עו״ד</a>
+  <a href="/demos/">הכל</a>
+</div>
+
+<script src="/js/countries.js"></script>
+<script src="/js/geo.js"></script>
+<script src="/js/country-selector.js"></script>
+<script src="/js/demo-intl.js"></script>
+
+</body>
+</html>
